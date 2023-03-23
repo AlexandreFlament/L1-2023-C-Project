@@ -24,7 +24,7 @@ void delete_point(Point *p) {
 }
 
 void print_point(Point *p) {
-    printf("POINT %i %i", p->x, p->y);
+    printf("POINT | %i %i", p->x, p->y);
 }
 
 
@@ -50,5 +50,30 @@ void delete_line(Line *l) {
 }
 
 void print_line(Line *l) {
-    printf("LINE P1 %i %i P2 %i %i", l->p1->x,l->p1->y,l->p2->x,l->p2->y);
+    printf("LINE | P1 %i %i | P2 %i %i", l->p1->x,l->p1->y,l->p2->x,l->p2->y);
+}
+
+
+// SQUARES
+
+typedef struct {
+    Point *p;
+    int lenght;
+} Square;
+
+Square *create_square(Point *p, int lenght) {
+    Square *square = malloc(sizeof(Square));
+    if (square != NULL) {
+        square->p = p;
+        square->lenght = lenght;
+    }
+    return square;
+}
+
+void delete_square(Square *s) {
+    free(s);
+}
+
+void print_square(Square *s) {
+    printf("SQUARE | P %i %i | L %i", s->p->x, s->p->y, s->lenght);
 }

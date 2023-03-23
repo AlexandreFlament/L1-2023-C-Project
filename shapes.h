@@ -23,4 +23,14 @@ void delete_line(Line *l);
 void print_line(Line *l);
 
 
+typedef struct {
+    Point *p;
+    int lenght;
+} Square;
+
+Square *create_square(Point *p, int lenght);
+void delete_square(Square *s);
+void print_square(Square *s);
+
+
 #endif
