@@ -77,3 +77,30 @@ void delete_square(Square *s) {
 void print_square(Square *s) {
     printf("SQUARE | P %i %i | L %i", s->p->x, s->p->y, s->lenght);
 }
+
+
+// RECTANGLES
+
+typedef struct
+{
+    Point *p;
+    int width;
+    int height;
+} Rect;
+
+Rect *create_rect(Point *p, int width, int height) {
+    Rect *rect = malloc(sizeof(Rect));
+    if (rect != NULL) {
+        rect->p = p;
+        rect->width = width;
+        rect->height = height;
+    }
+}
+
+void delete_rect(Rect *r) {
+    free(r);
+}
+
+void print_rect(Rect *r) {
+    printf("RECT | P %i %i | W %i | H %i", r->p->x, r->p->y, r->width, r->height);
+}

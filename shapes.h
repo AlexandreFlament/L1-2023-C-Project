@@ -33,4 +33,15 @@ void delete_square(Square *s);
 void print_square(Square *s);
 
 
+typedef struct
+{
+    Point *p;
+    int width;
+    int height;
+} Rect;
+
+Rect *create_rect(Point *p, int width, int height);
+void delete_rect(Rect *s);
+void print_rect(Rect *s);
+
 #endif

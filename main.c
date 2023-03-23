@@ -17,11 +17,17 @@ int main() {
     Square *s = create_square(p1, 10);
 
     print_square(s);
+    printf("\n");
+
+    Rect *r = create_rect(p1, 10, 5);
+
+    print_rect(r);
 
     delete_point(p1);
     delete_point(p2);
     delete_line(l);
-    delete_square(s);    
+    delete_square(s);
+    delete_rect(r);
 
     return 0;
 }
