@@ -95,6 +95,7 @@ Rect *create_rect(Point *p, int width, int height) {
         rect->width = width;
         rect->height = height;
     }
+    return rect;
 }
 
 void delete_rect(Rect *r) {
@@ -103,4 +104,30 @@ void delete_rect(Rect *r) {
 
 void print_rect(Rect *r) {
     printf("RECT | P %i %i | W %i | H %i", r->p->x, r->p->y, r->width, r->height);
+}
+
+
+// CIRCLES
+
+typedef struct
+{
+    Point *center;
+    int radius;
+} Circle;
+
+Circle *create_circle(Point *center, int radius) {
+    Circle *circle = malloc(sizeof(Circle));
+    if (circle != NULL) {
+        circle->center = center;
+        circle->radius = radius;
+    }
+    return circle;
+}
+
+void delete_circle(Circle *c) {
+    free(c);
+}
+
+void print_circle(Circle *c) {
+    printf("CIRCLE | P %i %i | R %i", c->center->x, c->center->y, c->radius);
 }

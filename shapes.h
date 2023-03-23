@@ -44,4 +44,15 @@ Rect *create_rect(Point *p, int width, int height);
 void delete_rect(Rect *s);
 void print_rect(Rect *s);
 
+
+typedef struct
+{
+    Point *center;
+    int radius;
+} Circle;
+
+Circle *create_circle(Point *center, int radius);
+void delete_circle(Circle *c);
+void print_circle(Circle *c);
+
 #endif
