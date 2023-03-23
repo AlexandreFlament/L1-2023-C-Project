@@ -131,3 +131,36 @@ void delete_circle(Circle *c) {
 void print_circle(Circle *c) {
     printf("CIRCLE | P %i %i | R %i", c->center->x, c->center->y, c->radius);
 }
+
+
+// POLYGONS
+
+typedef struct
+{
+    int n;
+    Point **points;
+} Polygon;
+
+Polygon *create_polygon(int n) {
+    Polygon *polygon = malloc(sizeof(Polygon));
+    if (polygon != NULL) {
+        polygon->n = n;
+    }
+    return polygon;
+}
+
+void delete_polygon(Polygon *p) {
+    free(p);
+}
+
+void print_polygon(Polygon *p) {
+    /* 
+    if (p->points[0]->x != p->points[p->n]->x || p->points[0]->y != p->points[p->n]->y) {
+        printf("Invalid polygon, P1 != P%i", p->n);
+    }
+    */
+    printf("POLYGON | N %i", p->n);
+    for (int i = 0; i<p->n; i++) {
+        printf(" | P%i %i %i", i, p->points[i]->x, p->points[i]->y);
+    }
+}

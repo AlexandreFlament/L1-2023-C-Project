@@ -27,6 +27,13 @@ int main() {
     Circle *c = create_circle(p1, 15);
 
     print_circle(c);
+    printf("\n");
+
+    Polygon *p = create_polygon(2);
+
+    p->points[0] = p1;
+    p->points[1] = p2;
+    print_polygon(p);
 
     delete_point(p1);
     delete_point(p2);
@@ -34,6 +41,7 @@ int main() {
     delete_square(s);
     delete_rect(r);
     delete_circle(c);
+    delete_polygon(p);
 
     return 0;
 }

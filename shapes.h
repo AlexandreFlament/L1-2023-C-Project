@@ -55,4 +55,16 @@ Circle *create_circle(Point *center, int radius);
 void delete_circle(Circle *c);
 void print_circle(Circle *c);
 
+
+typedef struct
+{
+    int n;
+    Point **points;
+} Polygon;
+
+Polygon *create_polygon(int n);
+void delete_polygon(Polygon *p);
+void print_polygon(Polygon *p);
+
+
 #endif
