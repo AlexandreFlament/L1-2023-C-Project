@@ -67,4 +67,23 @@ void delete_polygon(Polygon *p);
 void print_polygon(Polygon *p);
 
 
+typedef enum { POINT, LINE, SQUARE, RECTANGLE, CIRCLE, POLYGON} SHAPE_TYPE;
+
+typedef struct {
+    int id;
+    SHAPE_TYPE shape_type;
+    void *ptrShape;
+} Shape;
+
+unsigned int get_next_id();
+Shape *create_empty_shape(SHAPE_TYPE st);
+Shape *create_point_shape(int x, int y);
+Shape *create_line_shape(int x1, int y1, int x2, int y2);
+Shape *create_square_shape(int x, int y, int lenght);
+Shape *create_rect_shape(int x, int y, int width, int height);
+Shape *create_circle_shape(int x, int y, int radius);
+Shape *create_polygon_shape(Point *points[], int n);
+void delete_shape(Shape *shp);
+void print_shape(Shape *shp);
+
 #endif

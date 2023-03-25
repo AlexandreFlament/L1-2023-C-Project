@@ -164,3 +164,111 @@ void print_polygon(Polygon *p) {
         printf(" | P%i %i %i", i, p->points[i]->x, p->points[i]->y);
     }
 }
+
+
+// SHAPES
+
+typedef enum { POINT, LINE, SQUARE, RECTANGLE, CIRCLE, POLYGON} SHAPE_TYPE;
+
+typedef struct {
+    int id;
+    SHAPE_TYPE shape_type;
+    void *ptrShape;
+} Shape;
+
+unsigned int global_id = 0;
+
+unsigned int get_next_id() {
+    global_id++;
+    return global_id;
+}
+
+Shape *create_empty_shape(SHAPE_TYPE st) {
+    Shape *shape = malloc(sizeof(Shape));
+    if (shape != NULL) {
+        shape->id = get_next_id();
+        shape->shape_type = st;
+        shape->ptrShape = NULL;
+    }
+    return shape;
+}
+
+Shape *create_point_shape(int x, int y) {
+    Shape *shp = create_empty_shape(POINT);
+    Point *p = create_point(x,y);
+    shp->ptrShape = p;
+    return shp;   
+}
+
+Shape *create_line_shape(int x1, int y1, int x2, int y2) {
+    Shape *shp = create_empty_shape(LINE);
+    Point *p1 = create_point(x1,y1);
+    Point *p2 = create_point(x2,y2);
+    Line *l = create_line(p1, p2);
+    shp->ptrShape = l;
+    return shp;
+}
+
+Shape *create_square_shape(int x, int y, int lenght) {
+    Shape *shp = create_empty_shape(SQUARE);
+    Point *p = create_point(x,y);
+    Square *sq = create_square(p, lenght);
+    shp->ptrShape = sq;
+    return shp;
+}
+
+Shape *create_rect_shape(int x, int y, int width, int height) {
+    Shape *shp = create_empty_shape(RECTANGLE);
+    Point *p = create_point(x,y);
+    Rect *r = create_rect(p, width, height);
+    shp->ptrShape = r;
+    return shp;
+}
+
+Shape *create_circle_shape(int x, int y, int radius) {
+    Shape *shp = create_empty_shape(CIRCLE);
+    Point *p = create_point(x,y);
+    Circle *c = create_circle(p, radius);
+    shp->ptrShape = c;
+    return shp;
+}
+
+Shape *create_polygon_shape(Point *points[], int n) {
+    Shape *shp = create_empty_shape(POLYGON);
+    Polygon *p = create_polygon(n);
+    p->points = points;
+    shp->ptrShape = p;
+    return shp;
+}
+
+void delete_shape(Shape *shp) {
+    free(shp);
+}
+
+void print_shape(Shape *shp) {
+    switch (shp->shape_type)
+    {
+    case POINT:
+        print_point(shp->ptrShape);
+        break;
+    case LINE:
+        print_line(shp->ptrShape);
+        break;
+    case SQUARE:
+        print_square(shp->ptrShape);
+        break;
+    case RECTANGLE:
+        print_rect(shp->ptrShape);
+        break;
+    case CIRCLE:
+        print_circle(shp->ptrShape);
+        break;
+    case POLYGON:
+        print_polygon(shp->ptrShape);
+        break;
+    default:
+        printf("Invalid shape");
+        break;
+    }
+    printf(" | ID %i", shp->id);
+}

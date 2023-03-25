@@ -2,7 +2,7 @@
 #include "shapes.h"
 
 int main() {
-
+    /*
     Point *p1 = create_point(5,5);
     Point *p2 = create_point(10,10);
 
@@ -29,10 +29,11 @@ int main() {
     print_circle(c);
     printf("\n");
 
-    Polygon *p = create_polygon(2);
+    Polygon *p = create_polygon(3);
 
     p->points[0] = p1;
     p->points[1] = p2;
+    p->points[2] = p1;
     print_polygon(p);
 
     delete_point(p1);
@@ -42,6 +43,25 @@ int main() {
     delete_rect(r);
     delete_circle(c);
     delete_polygon(p);
+    */
+
+
+    Shape *f1 = create_line_shape(5,5,10,10);
+    Shape *f2 = create_line_shape(5,5,10,10);
+    Shape *f3 = create_line_shape(5,5,10,10);
+
+
+    print_shape(f1);
+    printf("\n");
+    print_shape(f2);
+    printf("\n");
+    print_shape(f3);
+
+    delete_shape(f1);
+    delete_shape(f2);
+    delete_shape(f3);
+
+
 
     return 0;
 }
