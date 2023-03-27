@@ -1,8 +1,10 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "shapes.h"
 #include "storage.h"
 
 int running = 1;
+int c;
 
 void optionA(ShapeNode *shape_list) {
     int choice = 0;
@@ -18,6 +20,8 @@ void optionA(ShapeNode *shape_list) {
         printf("     >> Your choice: ");
         scanf("%i", &choice);
         printf("\n");
+
+        while ((c = getchar()) != '\n' && c != EOF) { } // flush stdin
     }
     int x, y, x1, y1, r, w, h, l;
     switch (choice) {
@@ -59,7 +63,19 @@ void optionA(ShapeNode *shape_list) {
             add_shape_to_node(shape_list, create_rect_shape(x, y, w, h));
             break;
         case 6:
-            printf("p e r h a p s");
+            int counter = 0, running = 1;
+            Point *points[100];
+            printf("The program will stop once the first and last point are the same\n");
+            while (running) {
+                printf("         >> Enter the x and y coordinates the point %i: ", counter);
+                scanf("%i %i", &x, &y);
+                points[counter] = create_point(x,y);
+                counter++;
+                if (points[0]->x == points[counter-1]->x && points[0]->y == points[counter-1]->y && counter>1) {
+                    running = 0;
+                }
+            }
+            add_shape_to_node(shape_list, create_polygon_shape(points, counter));
             break;
         
         default:
@@ -70,6 +86,7 @@ void optionA(ShapeNode *shape_list) {
 int main() {
     ShapeNode *shape_list = create_shape_node();
     char choice;
+    system("clear");
     while (running == 1) {
         choice = 'Z';
         printf("Please select an action:\n");
@@ -83,6 +100,8 @@ int main() {
         scanf("%c[¨n]", &choice);
         printf("\n");
         
+        while ((c = getchar()) != '\n' && c != EOF) { } // flush stdin
+
         switch (choice) {
             case 'F':
             case 'f':
@@ -97,6 +116,10 @@ int main() {
             
             case 'B':
             case 'b':
+                if (shape_list->shp == NULL) {
+                    printf("No shape to display\n\n");
+                    break;
+                }
                 printf("\n");
                 print_shape_node(shape_list);
                 printf("\n");
@@ -105,7 +128,15 @@ int main() {
             default:
                 break;
         }
+        
+        if (choice == 'B' || choice == 'b' || choice == 'D' || choice == 'd') {
+            printf("Press enter to continue...");
+            scanf("%c", &c);
+        }
+        
+        while ((c = getchar()) != '\n' && c != EOF) { } // flush stdin
 
+        system("clear");
     }
 
     return 0;

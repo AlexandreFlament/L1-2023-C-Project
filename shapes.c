@@ -24,7 +24,7 @@ void delete_point(Point *p) {
 }
 
 void print_point(Point *p) {
-    printf("POINT | %i %i", p->x, p->y);
+    printf("POINT   | %i %i\n       ", p->x, p->y);
 }
 
 
@@ -50,7 +50,7 @@ void delete_line(Line *l) {
 }
 
 void print_line(Line *l) {
-    printf("LINE | P1 %i %i | P2 %i %i", l->p1->x,l->p1->y,l->p2->x,l->p2->y);
+    printf("LINE    | P1 %i %i\n        | P2 %i %i\n       ", l->p1->x,l->p1->y,l->p2->x,l->p2->y);
 }
 
 
@@ -75,7 +75,7 @@ void delete_square(Square *s) {
 }
 
 void print_square(Square *s) {
-    printf("SQUARE | P %i %i | L %i", s->p->x, s->p->y, s->lenght);
+    printf("SQUARE  | P %i %i\n        | L %i\n       ", s->p->x, s->p->y, s->lenght);
 }
 
 
@@ -103,7 +103,7 @@ void delete_rect(Rect *r) {
 }
 
 void print_rect(Rect *r) {
-    printf("RECT | P %i %i | W %i | H %i", r->p->x, r->p->y, r->width, r->height);
+    printf("RECT    | P %i %i\n        | W %i\n        | H %i\n       ", r->p->x, r->p->y, r->width, r->height);
 }
 
 
@@ -129,7 +129,7 @@ void delete_circle(Circle *c) {
 }
 
 void print_circle(Circle *c) {
-    printf("CIRCLE | P %i %i | R %i", c->center->x, c->center->y, c->radius);
+    printf("CIRCLE  | P %i %i\n        | R %i\n       ", c->center->x, c->center->y, c->radius);
 }
 
 
@@ -159,10 +159,11 @@ void print_polygon(Polygon *p) {
         printf("Invalid polygon, P1 != P%i", p->n);
     }
     */
-    printf("POLYGON | N %i", p->n);
+    printf("POLYGON | N : %i", p->n);
     for (int i = 0; i<p->n; i++) {
-        printf(" | P%i %i %i", i, p->points[i]->x, p->points[i]->y);
+        printf("\n        | P%i: %i %i", i, p->points[i]->x, p->points[i]->y);
     }
+    printf("\n       ");
 }
 
 
@@ -236,7 +237,10 @@ Shape *create_circle_shape(int x, int y, int radius) {
 Shape *create_polygon_shape(Point *points[], int n) {
     Shape *shp = create_empty_shape(POLYGON);
     Polygon *p = create_polygon(n);
-    p->points = points;
+    p->points = malloc(sizeof(Point)*n);
+    for (int i = 0; i < n; i++) {
+        p->points[i] = create_point(points[i]->x, points[i]->y);
+    }
     shp->ptrShape = p;
     return shp;
 }
@@ -270,5 +274,5 @@ void print_shape(Shape *shp) {
         printf("Invalid shape");
         break;
     }
-    printf(" | ID %i", shp->id);
+    printf(" | ID: %i", shp->id);
 }
