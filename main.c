@@ -2,24 +2,111 @@
 #include "shapes.h"
 #include "storage.h"
 
+int running = 1;
+
+void optionA(ShapeNode *shape_list) {
+    int choice = 0;
+    while (choice < 1 || choice > 7 ) {
+        printf("    Please select an action:\n");
+        printf("        1. Add a point\n");
+        printf("        2. Add a line\n");
+        printf("        3. Add a circle\n");
+        printf("        4. Add a square\n");
+        printf("        5. Add a rectangle\n");
+        printf("        6. Add a polygon\n");
+        printf("        7. Return to previous menu\n");
+        printf("     >> Your choice: ");
+        scanf("%i", &choice);
+        printf("\n");
+    }
+    int x, y, x1, y1, r, w, h, l;
+    switch (choice) {
+        case 1:
+            printf("         >> Enter the x and y coordinates: ");
+            scanf("%i %i", &x, &y);
+            add_shape_to_node(shape_list, create_point_shape(x,y));
+            break;
+        
+        case 2:
+            printf("         >> Enter the x and y coordinates of the first point: ");
+            scanf("%i %i", &x, &y);
+            printf("         >> Enter the x and y coordinates of the second point: ");
+            scanf("%i %i", &x1, &y1);
+            add_shape_to_node(shape_list, create_line_shape(x,y,x1,y1));
+            break;
+        
+        case 3:
+            printf("         >> Enter the x and y coordinates of the origin: ");
+            scanf("%i %i", &x, &y);
+            printf("         >> Enter the radius of the circle: ");
+            scanf("%i", &r);
+            add_shape_to_node(shape_list, create_circle_shape(x,y,r));
+            break;
+        case 4:
+            printf("         >> Enter the x and y coordinates of the top left point: ");
+            scanf("%i %i", &x, &y);
+            printf("         >> Enter the length: ");
+            scanf("%i", &l);
+            add_shape_to_node(shape_list, create_square_shape(x,y,l));
+            break;
+        case 5:
+            printf("         >> Enter the x and y coordinates of the top left point: ");
+            scanf("%i %i", &x, &y);
+            printf("         >> Enter the width: ");
+            scanf("%i", &w);
+            printf("         >> Enter the height: ");
+            scanf("%i", &h);
+            add_shape_to_node(shape_list, create_rect_shape(x, y, w, h));
+            break;
+        case 6:
+            printf("p e r h a p s");
+            break;
+        
+        default:
+            break;
+    }
+}
 
 int main() {
     ShapeNode *shape_list = create_shape_node();
+    char choice;
+    while (running == 1) {
+        choice = 'Z';
+        printf("Please select an action:\n");
+        printf("    A. Add a shape\n");
+        printf("    B. Display the list of shapes\n");
+        printf("    C. Delete a shape\n");
+        printf("    D. Draw the shapes\n");
+        printf("    E. Help\n");
+        printf("    F. Exit\n");
+        printf(" >> Your choice: ");
+        scanf("%c[¨n]", &choice);
+        printf("\n");
+        
+        switch (choice) {
+            case 'F':
+            case 'f':
+                running = 0;
+                break;
+            
+            case 'A':
+            case 'a':
+                optionA(shape_list);
+                printf("\n");
+                break;
+            
+            case 'B':
+            case 'b':
+                printf("\n");
+                print_shape_node(shape_list);
+                printf("\n");
+                break;
 
-    Shape *f1 = create_line_shape(5,5,10,10);
-    Shape *f2 = create_line_shape(5,5,10,10);
-    Shape *f3 = create_line_shape(5,5,10,10);
+            default:
+                break;
+        }
 
-    ShapeNode *n1 = create_shape_node();
-    add_shape_to_node(n1, f1);
-    add_shape_to_node(n1, f2);
-    add_shape_to_node(n1, f3);
-
-    print_shape_node(n1);
-    
-    delete_shape_node(n1->next->next);
-    delete_shape_node(n1->next);
-    delete_shape_node(n1);
+    }
 
     return 0;
 }
