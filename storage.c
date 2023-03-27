@@ -1,48 +1,48 @@
-#include "shapes.h"
 #include <stdlib.h>
+#include <stdio.h>
+#include "shapes.h"
 
-typedef struct {
-    int pos;
-    Layers next;
-    Shapes *list;
-} Layers;
 
-typedef struct {
-    Shapes next;
-    Shape *shp;
-} Shapes;
+typedef struct ShapeNode {
+    struct ShapeNode* next;
+    Shape* shp;
+} ShapeNode;
 
-Layers *create_layer(int pos) {
-    Layers *lyr = malloc(sizeof(Layers));
-    if (lyr != NULL) {
-        lyr->pos = pos;
-        lyr->next = NULL;
-        lyr->list = NULL;
+ShapeNode *create_shape_node() {
+    ShapeNode *node = malloc(sizeof(ShapeNode));
+    if (node != NULL) {
+        node->next = NULL;
+        node->shp = NULL;
     }
-    return lyr;
+    return node;
 }
 
-Shapes *create_shape_list() {
-    Shapes *lst = malloc(sizeof(Shapes));
-    if (lst != NULL) {
-        lst->next = NULL;
-        lst->shp = NULL;
-    }
-    return lst;
+void delete_shape_node(ShapeNode *node) {
+    delete_shape(node->shp);
+    free(node);
 }
 
-void add_layer(Layers lyrs, int pos) {
+void add_shape_to_node(ShapeNode *node, Shape *shp) {
+    ShapeNode *shpnode = create_shape_node();
+    shpnode->shp = shp;
+
+    if (node->shp == NULL) {
+        node->shp = shp;
+        return;
+    }
     
+    ShapeNode *curr = node;
+    while (curr->next != NULL) {
+        curr = curr->next;
+    }
+    curr->next = shpnode;
 }
 
-void add_shape(Shapes lst, Shape shp) {
-
-}
-
-void remove_layer(Layers lys, int pos) {
-
-}
-
-void remove_shape(Shapes lst, Shape id) {
-
+void print_shape_node(ShapeNode *ShpNode) {
+    ShapeNode *curr = ShpNode;
+    while (curr != NULL) {
+        print_shape(curr->shp);
+        printf("\n");
+        curr = curr->next;
+    }
 }
