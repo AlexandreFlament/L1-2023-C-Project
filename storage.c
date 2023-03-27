@@ -18,7 +18,6 @@ ShapeNode *create_shape_node() {
 }
 
 void delete_shape_node(ShapeNode *node) {
-    delete_shape(node->shp);
     free(node);
 }
 
