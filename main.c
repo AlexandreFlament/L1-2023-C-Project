@@ -19,7 +19,6 @@ void optionA(ShapeNode *shape_list) {
         printf("        7. Return to previous menu\n");
         printf("     >> Your choice: ");
         scanf("%i", &choice);
-        printf("\n");
 
         while ((c = getchar()) != '\n' && c != EOF) { } // flush stdin
     }
@@ -100,8 +99,6 @@ int main() {
         scanf("%c[¨n]", &choice);
         printf("\n");
         
-        while ((c = getchar()) != '\n' && c != EOF) { } // flush stdin
-
         switch (choice) {
             case 'F':
             case 'f':
@@ -134,8 +131,6 @@ int main() {
             scanf("%c", &c);
         }
         
-        while ((c = getchar()) != '\n' && c != EOF) { } // flush stdin
-
         system("clear");
     }
 
