@@ -141,7 +141,7 @@ unsigned int get_next_id() {
 }
 ```
 
-The shape_type identifies the what the shape in the structure is and is the list of all the shapes that are defines.
+The shape_type identifies what the shape in the structure is and is the list of all the shapes that are defines.
 ```
 typedef enum { POINT, LINE, SQUARE, RECTANGLE, CIRCLE, POLYGON} SHAPE_TYPE;
 ```
@@ -160,13 +160,13 @@ Shape *create_point_shape(int x, int y) {
     return shp;   
 }
 ```
-To delete a shape, 'delete_shape' that is the same for any type, using free() to free the memory allocated to the shape.
+To delete a shape, `delete_shape` that is the same for any type, using free() to free the memory allocated to the shape.
 ```
 void delete_shape(Shape *shp) {
     free(shp);
 }
 ```
-And finnaly, `print_shape` that is the same for any shape again.  
+And finally, `print_shape` that is the same for any shape again.  
 Using a switch case, it detects what is the type of the shape and which `print_x` to call then adds the ID of the shape to the displayed result.
 ```
 void print_shape(Shape *shp) {
