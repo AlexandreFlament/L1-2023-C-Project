@@ -187,3 +187,51 @@ void print_shape(Shape *shp) {
     printf(" | ID: %i", shp->id);
 }
 ```
+
+### Storing shapes
+
+Shapes are stored in ShapeNodes which are composed of a pointer to a Shape and their successor (NULL if no successor)
+```
+typedef struct ShapeNode {
+    struct ShapeNode* next;
+    Shape* shp;
+} ShapeNode;
+```
+
+Through four function, we can manage what is shapes are stored in the memory.  
+`create_shape_node` creates an empty node with no shape and successor by dynamically allocating memory for a node.  
+```
+ShapeNode *create_shape_node() {
+    ShapeNode *node = malloc(sizeof(ShapeNode));
+    if (node != NULL) {
+        node->next = NULL;
+        node->shp = NULL;
+    }
+    return node;
+}
+```
+`delete_shape_node` delete a given node through the free function.  
+```
+void delete_shape_node(ShapeNode *node) {
+    free(node);
+}
+```
+`add_shape_to_node` add a node with a shape to an already existing linked list.  
+It calls the `create_shape_node()` and fills the returned node, then adding it to the linked list.  
+```
+void add_shape_to_node(ShapeNode *node, Shape *shp) {
+    ShapeNode *shpnode = create_shape_node();
+    shpnode->shp = shp;
+
+    if (node->shp == NULL) {
+        node->shp = shp;
+        return;
+    }
+    
+    ShapeNode *curr = node;
+    while (curr->next != NULL) {
+        curr = curr->next;
+    }
+    curr->next = shpnode;
+}
+```
