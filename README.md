@@ -150,8 +150,8 @@ And finnaly, the ptrShape is a pointer that directs to the stored shape.
    
 #### Operations on a shape
 
-Just as for individual shape, there exist a `create_X_shape` that's in charge of creating a shape for a given type.  
-It dynamically memory for a shape, then calls the function to create the shape of type X, who is then associated with the ptrShape of the shape.
+Just as for individual shapes, there exist a `create_X_shape` that's in charge of creating a shape for a given type.  
+It dynamically allocates memory for a shape, then calls the function to create the shape of type X, who is then associated with the ptrShape of the shape.
 ```
 Shape *create_point_shape(int x, int y) {
     Shape *shp = create_empty_shape(POINT);
