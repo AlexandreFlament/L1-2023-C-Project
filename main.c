@@ -89,9 +89,9 @@ int main() {
         printf("Please select an action:\n");
         printf("    A. Add a shape\n");
         printf("    B. Display the list of shapes\n");
-        printf("    C. Delete a shape\n");
-        printf("    D. Draw the shapes\n");
-        printf("    E. Help\n");
+        printf("    C. Delete a shape (WIP)\n");
+        printf("    D. Draw the shapes (WIP)\n");
+        printf("    E. Help (WIP)\n");
         printf("    F. Exit\n");
         printf(" >> Your choice: ");
         scanf("%c[¨n]", &choice);
