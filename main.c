@@ -20,8 +20,6 @@ void optionA(ShapeNode *shape_list) {
         printf("     >> Your choice: ");
         scanf("%i", &choice);
         printf("\n");
-
-        while ((c = getchar()) != '\n' && c != EOF) { } // flush stdin
     }
     int x, y, x1, y1, r, w, h, l;
     switch (choice) {
@@ -86,7 +84,6 @@ void optionA(ShapeNode *shape_list) {
 int main() {
     ShapeNode *shape_list = create_shape_node();
     char choice;
-    system("clear");
     while (running == 1) {
         choice = 'Z';
         printf("Please select an action:\n");
@@ -100,8 +97,6 @@ int main() {
         scanf("%c[¨n]", &choice);
         printf("\n");
         
-        while ((c = getchar()) != '\n' && c != EOF) { } // flush stdin
-
         switch (choice) {
             case 'F':
             case 'f':
@@ -133,10 +128,6 @@ int main() {
             printf("Press enter to continue...");
             scanf("%c", &c);
         }
-        
-        while ((c = getchar()) != '\n' && c != EOF) { } // flush stdin
-
-        system("clear");
     }
 
     return 0;
