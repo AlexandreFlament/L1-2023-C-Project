@@ -26,6 +26,7 @@ void optionA(ShapeNode *shape_list) {
         scanf("%i", &choice);
         clear_buffer();
         printf("\n");
+
     }
     int x, y, x1, y1, r, w, h, l;
     switch (choice) {

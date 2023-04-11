@@ -1,6 +1,5 @@
 # L1-2023-C-Project
 
-
 ## Compiling
 Use the following command in the terminal: "gcc main.c shapes.c storage.c"
 
