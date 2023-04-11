@@ -27,7 +27,7 @@ Please select an action:
  ```
 
 ### Option A
-Used to add shapes to the list of shapes. Once selected it will present you with a list of shapes to chose from.
+Used to add shapes to the list of shapes. Once selected it will present you with a list of shapes to choose from.
 ```
 >> Your choice: A
     Please select an action:
@@ -347,7 +347,7 @@ while (choice < 1 || choice > 7 ) {
 }
 ```
 
-Once the user choice is conirmed, we act accordingly by asking the necessary parameters for the `Shape`, filling the created empty shape with the given parameters and adding it at the end of the linked list of shapes `shape_list`.  
+Once the user choice is confirmed, we act accordingly by asking the necessary parameters for the `Shape`, filling the created empty shape with the given parameters and adding it at the end of the linked list of shapes `shape_list`.  
 ```c
 switch (choice) {
     case 1:
