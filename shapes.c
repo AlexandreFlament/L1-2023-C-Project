@@ -24,7 +24,7 @@ void delete_point(Point *p) {
 }
 
 void print_point(Point *p) {
-    printf("POINT   | %i %i\n       ", p->x, p->y);
+    printf("POINT   | P : %i %i\n       ", p->x, p->y);
 }
 
 
@@ -50,7 +50,7 @@ void delete_line(Line *l) {
 }
 
 void print_line(Line *l) {
-    printf("LINE    | P1 %i %i\n        | P2 %i %i\n       ", l->p1->x,l->p1->y,l->p2->x,l->p2->y);
+    printf("LINE    | P1: %i %i\n        | P2: %i %i\n       ", l->p1->x,l->p1->y,l->p2->x,l->p2->y);
 }
 
 
@@ -75,7 +75,7 @@ void delete_square(Square *s) {
 }
 
 void print_square(Square *s) {
-    printf("SQUARE  | P %i %i\n        | L %i\n       ", s->p->x, s->p->y, s->lenght);
+    printf("SQUARE  | P : %i %i\n        | L : %i\n       ", s->p->x, s->p->y, s->lenght);
 }
 
 
@@ -103,7 +103,7 @@ void delete_rect(Rect *r) {
 }
 
 void print_rect(Rect *r) {
-    printf("RECT    | P %i %i\n        | W %i\n        | H %i\n       ", r->p->x, r->p->y, r->width, r->height);
+    printf("RECT    | P : %i %i\n        | W : %i\n        | H : %i\n       ", r->p->x, r->p->y, r->width, r->height);
 }
 
 
@@ -129,7 +129,7 @@ void delete_circle(Circle *c) {
 }
 
 void print_circle(Circle *c) {
-    printf("CIRCLE  | P %i %i\n        | R %i\n       ", c->center->x, c->center->y, c->radius);
+    printf("CIRCLE  | P : %i %i\n        | R : %i\n       ", c->center->x, c->center->y, c->radius);
 }
 
 

@@ -61,7 +61,7 @@ typedef struct LayerNode
 LayerNode *create_layer_node() {
     LayerNode *node = malloc(sizeof(LayerNode));
     if (node != NULL) {
-        node->id = NULL;
+        node->id = 1; // To Change
         node->shps = NULL;
         node->next = NULL;
     }
