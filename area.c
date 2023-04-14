@@ -21,6 +21,7 @@ Area* create_area(unsigned int width, unsigned int height) {
 
 void add_shape_to_area(Area* area, Shape* shape) {
     area->shapes[area->nb_shape] = shape;
+    area->nb_shape++;
 }
 
 void clear_area(Area* area) {
