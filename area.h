@@ -3,6 +3,9 @@
 
 #include "shapes.h"
 
+
+// AREA
+
 #define SHAPE_MAX 100
 #define BOOL int
 
@@ -22,5 +25,23 @@ void erase_area(Area* area);
 void delete_area(Area* area);
 void draw_area(Area* area);
 void print_area(Area* area);
+
+
+// PIXEL
+
+struct pixel {
+    int px;
+    int py;
+};
+typedef struct pixel Pixel;
+
+Pixel* create_pixel(int px, int py);
+void delete_pixel(Pixel* pixel);
+
+
+// PIXEL DRAWING
+
+Pixel **pixel_point(Shape *shp, int *nb_pixels);
+Pixel **pixel_line(Shape *shp, int *nb_pixels);
 
 #endif
