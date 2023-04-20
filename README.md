@@ -12,7 +12,7 @@ If you have the executable file, run it and follow the program instructions.
 
 ## How To use it
 
-### The options
+### The Options
 Upon running the program, you will be presented with a list of options, each doing their own magic as explained further down.  
 To select an option, just write the letter associated with said option (Upper and Lower case letter work).
 ```
@@ -27,7 +27,7 @@ Please select an action:
  ```
 
 ### Option A
-Used to add shapes to the list of shapes. Once selected it will present you with a list of shapes to choose from.
+Used to add shapes to the list of shapes. Once selected, it will present you with a list of shapes to choose from.
 ```
 >> Your choice: A
     Please select an action:
@@ -40,7 +40,7 @@ Used to add shapes to the list of shapes. Once selected it will present you with
         7. Return to previous menu
      >> Your choice: 
 ```
-Selecting one will ask you to fill out the information of said shape.  
+Selecting one of them will prompt you to fill out the information of said shape.  
 `For a Polygon:`
 ```
 The program will stop once the first and last point are the same
@@ -118,11 +118,11 @@ POINT   | P : 0 0
        
 ```
 
-### The shape structure
+### The Shape Structure
 
 #### Structure
 
-Compared to the previous shapes, the `Shape` structure is the one that is used to store the shapes for future use such as displaying.
+Compared to the previous shapes, the `Shape` structure is the one that is used to store the shapes for future uses such as displaying.
 ```c
 typedef struct {
     int id;
@@ -131,7 +131,7 @@ typedef struct {
 } Shape;
 ```
 
-The id is obtained through a function that increment the `global_id` (Positive and starts at 0) and returns it, meaning that the first id would be 1.
+The id is obtained through a function that increment the `global_id` (which is positive and starts at 0) and returns it, meaning that the first id would be 1.
 ```c
 unsigned int global_id = 0;
 
@@ -141,14 +141,14 @@ unsigned int get_next_id() {
 }
 ```
 
-The `shape_type` identifies what the `Shape` in the structure is and is the list of all the shapes that are defines.
+The `shape_type` identifies what the `Shape` in the structure is, and is the list of all the shapes that are defined.
 ```c
 typedef enum { POINT, LINE, SQUARE, RECTANGLE, CIRCLE, POLYGON} SHAPE_TYPE;
 ```
 
-And finnaly, the `ptrShape` is a pointer that directs to the stored shape.  
+And finally, the `ptrShape` is a pointer that directs to the stored shape.  
    
-#### Operations on a shape
+#### Operations on a Shape
 
 Just as for individual shapes, there exist a `create_X_shape` that's in charge of creating a shape for a given type.  
 It dynamically allocates memory for a `Shape`, then calls the function to create the shape of type X, who is then associated with the `ptrShape` of the shape.
@@ -160,14 +160,14 @@ Shape *create_point_shape(int x, int y) {
     return shp;   
 }
 ```
-To delete a shape, `delete_shape` that is the same for any type, using free() to free the memory allocated to the shape.
+To delete a shape, `delete_shape` which is used the same for any type, using free() to free the memory allocated to the shape.
 ```c
 void delete_shape(Shape *shp) {
     free(shp);
 }
 ```
-And finally, `print_shape` that is the same for any shape again.  
-Using a switch case, it detects what is the type of the shape and which `print_x` to call then adds the ID of the shape to the displayed result.
+And finally, `print_shape` which is the same for any shape again.  
+Using a switch case, it detects what is the type of the shape and which `print_x` to call, then adds the ID of the shape to the displayed result.
 ```c
 void print_shape(Shape *shp) {
     switch (shp->shape_type) {
@@ -188,7 +188,7 @@ void print_shape(Shape *shp) {
 }
 ```
 
-### Storing shapes
+### Storing Shapes
 
 Shapes are stored in `ShapeNodes` which are composed of a pointer to a `Shape` and their successor (NULL if no successor)
 ```c
@@ -198,8 +198,8 @@ typedef struct ShapeNode {
 } ShapeNode;
 ```
 
-Through four function, we can manage what is shapes are stored in the memory.  
-`create_shape_node` creates an empty node with no shape and successor by dynamically allocating memory for a node.  
+Through four functions, we can manage the shapes that are stored in the memory.  
+`create_shape_node` creates an empty node with no shape and no successor by dynamically allocating memory for a node.  
 ```c
 ShapeNode *create_shape_node() {
     ShapeNode *node = malloc(sizeof(ShapeNode));
@@ -235,7 +235,7 @@ void add_shape_to_node(ShapeNode *node, Shape *shp) {
     curr->next = shpnode;
 }
 ```
-`print_shape_node` iterates through the nodes until the `NULL` node and calls the `print_shape` function for each node it goes through that's not `NULL` 
+`print_shape_node` iterates through the nodes until the `NULL` node and calls the `print_shape` function for each node it goes through that's not `NULL`.
 ```c
 void print_shape_node(ShapeNode *ShpNode) {
     ShapeNode *curr = ShpNode;
@@ -247,11 +247,11 @@ void print_shape_node(ShapeNode *ShpNode) {
 }
 ```
 
-### Add up of everything
+### Add Up of Everything
 
 #### main
 
-After each scanf the `clear_buffer` function is used in order to clear `stdin`, the input buffer. It works by using the `getchar` function until the character that was obtained is `EOF` (End Of File) or `\n`.  
+After each scanf the `clear_buffer` function is used in order to clear `stdin`, the input buffer. It works by using the `getchar` function until the character obtained is `EOF` (End Of File) or `\n`.  
 ```c
 void clear_buffer() {
     char c;
@@ -275,7 +275,7 @@ while (running == 1) {
 }
 ```
 
-During the loop, it will display the options and ask which one the users choose through a `scanf`, following that it acts accordingly by determinating what to do with a `switch case`.  
+During the loop, it will display the options and ask which one the users want to choose through a `scanf`. Following that, it will act accordingly by determinating what to do with a `switch case`.  
 ```c
 choice = 'Z';
     printf("Please select an action:\n");
@@ -318,7 +318,7 @@ choice = 'Z';
 }
 ```
 
-In the case that option B or E (Display the list of shapes / Help) we wait for the user input to move on with displaying the options.  
+In the case that option B or E (Display the list of shapes / Help) is choosen, we wait for the user input to move on with displaying the options.  
 ```c
 if (choice == 'B' || choice == 'b' || choice == 'D' || choice == 'd') {
     printf("Press enter to continue...");
@@ -329,7 +329,7 @@ if (choice == 'B' || choice == 'b' || choice == 'D' || choice == 'd') {
 
 #### Option A function
 
-The first thing that is done is to ask the user what he shape he wants to add in the available shapes. If he gave a choice that is not among the possible choices, the program will redisplay and reask for his choice until it's correct, to do so we check if his choice is between 1 and 7.
+The first thing that is done is to ask the user what shape he wants to add amongst the available shapes. If he gave a choice that is not among the possible choices, the program will redisplay and reask for his choice until it's correct. To do so, we check if his choice is between 1 and 7.
 ```c
 while (choice < 1 || choice > 7 ) {
     printf("    Please select an action:\n");
