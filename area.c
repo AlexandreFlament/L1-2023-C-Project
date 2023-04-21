@@ -77,6 +77,33 @@ Pixel* create_pixel(int px, int py) {
     return p;
 }
 
+Pixel** create_shape_to_pixel(Shape* shape, int *nb_pixels) {
+    switch (shape->shape_type) {
+        case POINT:
+            return pixel_point(shape, nb_pixels);
+            break;
+        
+        case LINE:
+            return pixel_line(shape, nb_pixels);
+            break;
+        
+        case CIRCLE:
+            return pixel_circle(shape, nb_pixels);
+            break;
+            
+        default:
+            return NULL;
+            break;
+    }
+}
+
+void delete_pixel_shape(Pixel** pixel, int nb_pixels) {
+    for (int i = 0; i<nb_pixels; i++) {
+        free(pixel[i]);
+    }
+    free(pixel);
+}
+
 void delete_pixel(Pixel* pixel) {
     free(pixel);
 }

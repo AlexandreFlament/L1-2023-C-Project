@@ -36,6 +36,8 @@ struct pixel {
 typedef struct pixel Pixel;
 
 Pixel* create_pixel(int px, int py);
+Pixel** create_shape_to_pixel(Shape* shape, int *nb_pixels);
+void delete_pixel_shape(Pixel** pixel, int nb_pixels);
 void delete_pixel(Pixel* pixel);
 
 

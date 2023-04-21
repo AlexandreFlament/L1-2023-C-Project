@@ -20,7 +20,10 @@ ShapeNode *create_shape_node() {
 }
 
 void delete_shape_node(ShapeNode *node) {
-    free(node);
+    if (node!= NULL) {
+        delete_shape(node->shp);
+        free(node);
+    }
 }
 
 void add_shape_to_node(ShapeNode *node, Shape *shp) {
@@ -69,5 +72,13 @@ LayerNode *create_layer_node() {
 }
 
 void delete_layer_node(LayerNode *node) {
+    LayerNode *curr = node;
+    LayerNode *next = node->next;
+    while (curr!= NULL) {
+        delete_shape(curr->shps);
+        free(curr);
+        curr = next;
+        next = curr->next;
+    }
     free(node);
 }

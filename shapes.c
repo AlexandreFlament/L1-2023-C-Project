@@ -46,6 +46,8 @@ Line *create_line(Point *p1, Point *p2) {
 }
 
 void delete_line(Line *l) {
+    free(l->p1);
+    free(l->p2);
     free(l);
 }
 
@@ -71,6 +73,7 @@ Square *create_square(Point *p, int lenght) {
 }
 
 void delete_square(Square *s) {
+    free(s->p);
     free(s);
 }
 
@@ -99,6 +102,7 @@ Rect *create_rect(Point *p, int width, int height) {
 }
 
 void delete_rect(Rect *r) {
+    free(r->p);
     free(r);
 }
 
@@ -125,6 +129,7 @@ Circle *create_circle(Point *center, int radius) {
 }
 
 void delete_circle(Circle *c) {
+    free(c->center);
     free(c);
 }
 
@@ -150,6 +155,10 @@ Polygon *create_polygon(int n) {
 }
 
 void delete_polygon(Polygon *p) {
+    for (int i = 0; i < p->n; i++) {
+        delete_point(p->points[i]);
+    }
+    free(p->points);
     free(p);
 }
 
@@ -246,6 +255,26 @@ Shape *create_polygon_shape(Point *points[], int n) {
 }
 
 void delete_shape(Shape *shp) {
+    switch (shp->shape_type) {
+        case POINT:
+            delete_point(shp->ptrShape);
+            break;
+        case LINE:
+            delete_line(shp->ptrShape);
+            break;
+        case SQUARE:
+            delete_square(shp->ptrShape);
+            break;
+        case RECTANGLE:
+            delete_rect(shp->ptrShape);
+            break;
+        case CIRCLE:
+            delete_circle(shp->ptrShape);
+            break;
+        case POLYGON:
+            delete_polygon(shp->ptrShape);
+            break;
+    }
     free(shp);
 }
 
