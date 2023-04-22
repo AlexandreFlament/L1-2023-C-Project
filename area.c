@@ -49,7 +49,18 @@ void delete_area(Area* area) {
 }
 
 void draw_area(Area* area) {
-    // Done later in the doc
+    clear_area(area);
+
+    int nb_pixels;
+    Pixel **pixels;
+
+    for (int shpnb = 0; shpnb<area->nb_shape; shpnb++) {
+        pixels = create_shape_to_pixel(area->shapes[shpnb], &nb_pixels);
+        for (int pix = 0; pix<nb_pixels; pix++) {
+            area->mat[pixels[pix]->py][pixels[pix]->px] = 1;
+        }
+        delete_pixel_shape(pixels, nb_pixels);
+    }
 }
 
 void print_area(Area* area) {
@@ -86,11 +97,11 @@ Pixel** create_shape_to_pixel(Shape* shape, int *nb_pixels) {
         case LINE:
             return pixel_line(shape, nb_pixels);
             break;
-        
+        /*
         case CIRCLE:
             return pixel_circle(shape, nb_pixels);
             break;
-            
+            */
         default:
             return NULL;
             break;
@@ -122,17 +133,16 @@ Pixel **pixel_point(Shape *shp, int *nb_pixels) {
 
 Pixel **pixel_line(Shape *shp, int *nb_pixels) {
     Line *ln = (Line*)shp->ptrShape;
-
     int dx = ln->p2->x - ln->p1->x;
     int dy = ln->p2->y - ln->p1->y;
 
     int x,y;
     if (dx > 0) {
-        int x = ln->p1->x;
-        int y = ln->p1->y;
+        x = ln->p1->x;
+        y = ln->p1->y;
     } else {
-        int x = ln->p2->x;
-        int y = ln->p2->y;
+        x = ln->p2->x;
+        y = ln->p2->y;
     }
 
     int dmin, dmax;
