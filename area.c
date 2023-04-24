@@ -221,7 +221,7 @@ Pixel **pixel_square(Shape *shp, int* nb_pixels) {
     Pixel **p1 = pixel_line(create_line_shape(sq->p->x, sq->p->y, sq->p->x+sq->lenght, sq->p->y), &nbpix1);
     Pixel **p2 = pixel_line(create_line_shape(sq->p->x, sq->p->y, sq->p->x, sq->p->y+sq->lenght), &nbpix2);
     Pixel **p3 = pixel_line(create_line_shape(sq->p->x, sq->p->y+sq->lenght, sq->p->x+sq->lenght, sq->p->y+sq->lenght), &nbpix3);
-    Pixel **p4 = pixel_line(create_line_shape(sq->p->x, sq->p->y+sq->lenght, sq->p->x+sq->lenght, sq->p->y+sq->lenght), &nbpix4);
+    Pixel **p4 = pixel_line(create_line_shape(sq->p->x+sq->lenght, sq->p->y, sq->p->x+sq->lenght, sq->p->y+sq->lenght), &nbpix4);
     
     *nb_pixels = nbpix1 + nbpix2 + nbpix3 + nbpix4;
     Pixel **pixel_tab = malloc(*nb_pixels * sizeof(Pixel*));
@@ -271,29 +271,29 @@ Pixel **pixel_rectangle(Shape *shp, int* nb_pixels) {
     return pixel_tab;
 }
 
-Pixel **pixel_polygon(Shape *shp, int* nb_pixels) { // not sure if it works, will see when pixel_line works
+Pixel **pixel_polygon(Shape *shp, int* nb_pixels) { // doesn't work as excepted
     Polygon *pol = (Polygon*)shp->ptrShape;
 
-    Pixel ***lines = malloc(sizeof(Line***)*(pol->n-1));
-    int lines_size[pol->n-1];
+    Pixel ***lines = malloc(sizeof(Line***)*(pol->n));
+    int lines_size[pol->n];
 
-    for (int i = 0; i<pol->n-1; i++) { 
+    for (int i = 0; i<pol->n; i++) { 
         Shape *line = create_line_shape(pol->points[i]->x,pol->points[i]->y,pol->points[i+1]->x,pol->points[i+1]->y);
         lines[i] = pixel_line(line, &lines_size[i]);
+        *nb_pixels += lines_size[i];
         delete_shape(line);
     }
 
-    Pixel **pixel_tab = malloc(sizeof(Pixel*)*lines_size[pol->n-1]);
-    *nb_pixels = 0;
-    for (int i = 0; i<pol->n-1; i++) {
+    Pixel **pixel_tab = malloc(sizeof(Pixel*)*(*nb_pixels));
+    int c = 0;
+    for (int i = 0; i<pol->n; i++) {
         for (int j = 0; j<lines_size[i]; j++) {
-            pixel_tab[*nb_pixels] = lines[i][j];
-            (*nb_pixels)++;
+            pixel_tab[c] = lines[i][j];
+            c++;
         }
         delete_pixel_shape(lines[i], lines_size[i]);
     }
 
     free(lines);
-
     return pixel_tab;
 }
