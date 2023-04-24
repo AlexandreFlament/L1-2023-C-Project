@@ -45,5 +45,8 @@ void delete_pixel(Pixel* pixel);
 
 Pixel **pixel_point(Shape *shp, int *nb_pixels);
 Pixel **pixel_line(Shape *shp, int *nb_pixels);
+Pixel **pixel_square(Shape *shp, int* nb_pixels);
+Pixel **pixel_rectangle(Shape *shp, int* nb_pixels);
+Pixel **pixel_polygon(Shape *shp, int* nb_pixels);
 
 #endif

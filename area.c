@@ -183,3 +183,88 @@ Pixel **pixel_line(Shape *shp, int *nb_pixels) {
 
     return pixel_tab;
 }
+
+Pixel **pixel_square(Shape *shp, int* nb_pixels) {
+    Square *sq = (Square*)shp->ptrShape;
+
+    int nbpix1, nbpix2, nbpix3, nbpix4; 
+
+    Pixel **p1 = pixel_line(create_line_shape(sq->p->x, sq->p->y, sq->p->x+sq->lenght, sq->p->y), &nbpix1);
+    Pixel **p2 = pixel_line(create_line_shape(sq->p->x, sq->p->y, sq->p->x, sq->p->y+sq->lenght), &nbpix2);
+    Pixel **p3 = pixel_line(create_line_shape(sq->p->x, sq->p->y+sq->lenght, sq->p->x+sq->lenght, sq->p->y+sq->lenght), &nbpix3);
+    Pixel **p4 = pixel_line(create_line_shape(sq->p->x, sq->p->y+sq->lenght, sq->p->x+sq->lenght, sq->p->y+sq->lenght), &nbpix4);
+    
+    *nb_pixels = nbpix1 + nbpix2 + nbpix3 + nbpix4;
+    Pixel **pixel_tab = malloc(*nb_pixels * sizeof(Pixel*));
+
+    for (int i = 0; i < nbpix1; i++) {
+        pixel_tab[i] = p1[i];
+    }
+    for (int i = 0; i < nbpix2; i++) {
+        pixel_tab[i + nbpix1] = p2[i];
+    }
+    for (int i = 0; i < nbpix3; i++) {
+        pixel_tab[i + nbpix1 + nbpix2] = p3[i];
+    }
+    for (int i = 0; i < nbpix4; i++) {
+        pixel_tab[i + nbpix1 + nbpix2 + nbpix3] = p4[i];
+    }
+
+    return pixel_tab;
+}
+
+Pixel **pixel_rectangle(Shape *shp, int* nb_pixels) {
+    Rect *rect = (Rect*)shp->ptrShape;
+
+    int nbpix1, nbpix2, nbpix3, nbpix4;
+
+    Pixel **p1 = pixel_line(create_line_shape(rect->p->x, rect->p->y, rect->p->x+rect->width, rect->p->y), &nbpix1);
+    Pixel **p2 = pixel_line(create_line_shape(rect->p->x, rect->p->y, rect->p->x, rect->p->y+rect->height), &nbpix2);
+    Pixel **p3 = pixel_line(create_line_shape(rect->p->x, rect->p->y+rect->height, rect->p->x+rect->width, rect->p->y+rect->height), &nbpix3);
+    Pixel **p4 = pixel_line(create_line_shape(rect->p->x+rect->width, rect->p->y, rect->p->x+rect->width, rect->p->y+rect->height), &nbpix4);
+
+    *nb_pixels = nbpix1 + nbpix2 + nbpix3 + nbpix4;
+    Pixel **pixel_tab = malloc(*nb_pixels * sizeof(Pixel*));
+
+    for (int i = 0; i < nbpix1; i++) {
+        pixel_tab[i] = p1[i];
+    }
+    for (int i = 0; i < nbpix2; i++) {
+        pixel_tab[i + nbpix1] = p2[i];
+    }
+    for (int i = 0; i < nbpix3; i++) {
+        pixel_tab[i + nbpix1 + nbpix2] = p3[i];
+    }
+    for (int i = 0; i < nbpix4; i++) {
+        pixel_tab[i + nbpix1 + nbpix2 + nbpix3] = p4[i];
+    }
+
+    return pixel_tab;
+}
+
+Pixel **pixel_polygon(Shape *shp, int* nb_pixels) { // not sure if it works, will see when pixel_line works
+    Polygon *pol = (Polygon*)shp->ptrShape;
+
+    Pixel ***lines = malloc(sizeof(Line***)*(pol->n-1));
+    int lines_size[pol->n-1];
+
+    for (int i = 0; i<pol->n-1; i++) { 
+        Shape *line = create_line_shape(pol->points[i]->x,pol->points[i]->y,pol->points[i+1]->x,pol->points[i+1]->y);
+        lines[i] = pixel_line(line, &lines_size[i]);
+        free_shape(line);
+    }
+
+    Pixel **pixel_tab = malloc(sizeof(Pixel*)*lines_size[pol->n-1]);
+    *nb_pixels = 0;
+    for (int i = 0; i<pol->n-1; i++) {
+        for (int j = 0; j<lines_size[i]; j++) {
+            pixel_tab[*nb_pixels] = lines[i][j];
+            (*nb_pixels)++;
+        }
+        delete_pixel_shape(lines[i], lines_size[i]);
+    }
+
+    free(lines);
+
+    return pixel_tab;
+}
