@@ -59,6 +59,7 @@ void draw_area(Area* area) {
     for (int shpnb = 0; shpnb<area->nb_shape; shpnb++) {
         pixels = create_shape_to_pixel(area->shapes[shpnb], &nb_pixels);
         for (int pix = 0; pix<nb_pixels; pix++) {
+            printf("\nPix: %d", pix);
             area->mat[pixels[pix]->py][pixels[pix]->px] = 1;
         }
         delete_pixel_shape(pixels, nb_pixels);
@@ -277,6 +278,7 @@ Pixel **pixel_polygon(Shape *shp, int* nb_pixels) {
     Pixel ***pixel_tab = malloc(sizeof(Pixel**)*(pol->n-1));
     int pixel_count[pol->n];
 
+    *nb_pixels = 0;
     for (int i = 0; i < pol->n-1; i++) {
         Shape *ln = create_line_shape(pol->points[i]->x, pol->points[i]->y, pol->points[i+1]->x, pol->points[i+1]->y);
         pixel_tab[i] = pixel_line(ln, &pixel_count[i]);
