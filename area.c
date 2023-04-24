@@ -271,29 +271,27 @@ Pixel **pixel_rectangle(Shape *shp, int* nb_pixels) {
     return pixel_tab;
 }
 
-Pixel **pixel_polygon(Shape *shp, int* nb_pixels) { // doesn't work as excepted
+Pixel **pixel_polygon(Shape *shp, int* nb_pixels) {
     Polygon *pol = (Polygon*)shp->ptrShape;
 
-    Pixel ***lines = malloc(sizeof(Line***)*(pol->n));
-    int lines_size[pol->n];
+    Pixel ***pixel_tab = malloc(sizeof(Pixel**)*(pol->n-1));
+    int pixel_count[pol->n];
 
-    for (int i = 0; i<pol->n; i++) { 
-        Shape *line = create_line_shape(pol->points[i]->x,pol->points[i]->y,pol->points[i+1]->x,pol->points[i+1]->y);
-        lines[i] = pixel_line(line, &lines_size[i]);
-        *nb_pixels += lines_size[i];
-        delete_shape(line);
+    for (int i = 0; i < pol->n-1; i++) {
+        Shape *ln = create_line_shape(pol->points[i]->x, pol->points[i]->y, pol->points[i+1]->x, pol->points[i+1]->y);
+        pixel_tab[i] = pixel_line(ln, &pixel_count[i]);
+
+        *nb_pixels += pixel_count[i];
     }
 
-    Pixel **pixel_tab = malloc(sizeof(Pixel*)*(*nb_pixels));
-    int c = 0;
-    for (int i = 0; i<pol->n; i++) {
-        for (int j = 0; j<lines_size[i]; j++) {
-            pixel_tab[c] = lines[i][j];
-            c++;
+    Pixel **pixels = malloc(sizeof(Pixel*)*(*nb_pixels));
+
+    int k = 0;
+    for (int i = 0; i < pol->n-1; i++) {
+        for (int j = 0; j < pixel_count[i]; j++) {
+            pixels[k++] = pixel_tab[i][j];
         }
-        delete_pixel_shape(lines[i], lines_size[i]);
     }
 
-    free(lines);
-    return pixel_tab;
+    return pixels;
 }
