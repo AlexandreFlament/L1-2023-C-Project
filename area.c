@@ -97,11 +97,23 @@ Pixel** create_shape_to_pixel(Shape* shape, int *nb_pixels) {
         case LINE:
             return pixel_line(shape, nb_pixels);
             break;
+
+        case SQUARE:
+            return pixel_square(shape, nb_pixels);
+            break;
+
+        case RECTANGLE:
+            return pixel_rectangle(shape, nb_pixels);
+            break;
         /*
         case CIRCLE:
             return pixel_circle(shape, nb_pixels);
             break;
-            */
+        */
+        case POLYGON:
+            return pixel_polygon(shape, nb_pixels);
+            break;
+
         default:
             return NULL;
             break;
