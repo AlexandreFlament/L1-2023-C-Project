@@ -23,7 +23,7 @@ int main() {
     scanf("%d %d %d %d", &x, &y, &w, &h);
     Shape *shp = create_rect_shape(x, y, w, h);
     add_shape_to_area(ar, shp);
-    */
+    
 
     int counter = 0, running = 1, x, y;
     Point *points[100];
@@ -40,7 +40,7 @@ int main() {
     Shape *shp = create_polygon_shape(points, counter);
     print_shape(shp);
     add_shape_to_area(ar, shp);
-
+    */
     draw_area(ar);
     print_area(ar);
 
