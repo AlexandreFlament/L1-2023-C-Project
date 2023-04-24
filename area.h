@@ -3,7 +3,6 @@
 
 #include "shapes.h"
 
-
 // AREA
 
 #define SHAPE_MAX 100

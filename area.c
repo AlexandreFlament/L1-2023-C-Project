@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
+#include "shapes.h"
 #include "area.h"
 
 
@@ -144,56 +146,71 @@ Pixel **pixel_point(Shape *shp, int *nb_pixels) {
 }
 
 Pixel **pixel_line(Shape *shp, int *nb_pixels) {
-    Line *ln = (Line*)shp->ptrShape;
-    int dx = ln->p2->x - ln->p1->x;
-    int dy = ln->p2->y - ln->p1->y;
+    Line *line = (Line*)shp->ptrShape;
 
-    int x,y;
-    if (dx > 0) {
-        x = ln->p1->x;
-        y = ln->p1->y;
-    } else {
-        x = ln->p2->x;
-        y = ln->p2->y;
+    int xa = line->p1->x;
+    int xb = line->p2->x;
+    int ya = line->p1->y;
+    int yb = line->p2->y;
+
+    if (xa > xb) {
+        int temp = xa;
+        xa = xb;
+        xb = temp;
+        temp = ya;
+        ya = yb;
+        yb = temp;
     }
 
-    int dmin, dmax;
-    if (dx < abs(dy)) {
-        dmin = dx;
-        dmax = abs(dy);
-    } else {
-        dmin = abs(dy);
-        dmax = dx;
+    int dx = xb - xa;
+    int dy = yb - ya;
+
+    int dmin = abs(dx) < abs(dy) ? abs(dx) : abs(dy);
+    int dmax = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
+    int nb_segs = dmin + 1;
+    int base_size = (dmax + 1) / nb_segs;
+    int remaining = (dmax + 1) % nb_segs;
+
+    int *segments = malloc(nb_segs * sizeof(int));
+    for (int i = 0; i < nb_segs; i++) {
+        segments[i] = base_size;
+    }
+    for (int i = 0; i < remaining; i++) {
+        segments[i]++;
     }
 
-    int nb_seg = dmin + 1;
-    int nb_pts = (dmax + 1) / nb_seg;
-    int remaining = (dmax + 1) % nb_seg;
-    *nb_pixels = nb_seg * nb_pts + remaining;
+    Pixel **pixels = malloc((dmax + 1) * sizeof(Pixel *));
+    *nb_pixels = 0;
 
-    Pixel **pixel_tab = malloc(*nb_pixels * sizeof(Pixel*));
+    int x = xa;
+    int y = ya;
 
-    int dx_step = dx / dmax;
-    int dy_step = dy / dmax;
-    int i = 0;
-    for (i = 0; i < nb_pts; i++) {
-        pixel_tab[i] = create_pixel(x, y);
-        x += dx_step * nb_seg;
-        y += dy_step * nb_seg;
-        for (int j = 1; j < nb_seg; j++) {
-            pixel_tab[i * nb_seg + j] = create_pixel(x, y);
-            x += dx_step;
-            y += dy_step;
+    int direction = dy < 0 ? -1 : 1;
+
+    for (int i = 0; i < nb_segs; i++) {
+        int is_horizontal = abs(dx) > abs(dy);
+
+        for (int j = 0; j < segments[i]; j++) {
+            pixels[*nb_pixels] = malloc(sizeof(Pixel));
+            pixels[*nb_pixels]->px = x;
+            pixels[*nb_pixels]->py = y;
+            (*nb_pixels)++;
+
+            if (is_horizontal) {
+                x += direction;
+            } else {
+                y += direction;
+            }
+        }
+
+        if (is_horizontal) {
+            y -= direction;
+        } else {
+            x += direction;
         }
     }
 
-    for (int j = 0; j < remaining; j++) {
-        pixel_tab[i * nb_seg + j] = create_pixel(x, y);
-        x += dx_step;
-        y += dy_step;
-    }
-
-    return pixel_tab;
+    return pixels;
 }
 
 Pixel **pixel_square(Shape *shp, int* nb_pixels) {
@@ -263,7 +280,7 @@ Pixel **pixel_polygon(Shape *shp, int* nb_pixels) { // not sure if it works, wil
     for (int i = 0; i<pol->n-1; i++) { 
         Shape *line = create_line_shape(pol->points[i]->x,pol->points[i]->y,pol->points[i+1]->x,pol->points[i+1]->y);
         lines[i] = pixel_line(line, &lines_size[i]);
-        free_shape(line);
+        delete_shape(line);
     }
 
     Pixel **pixel_tab = malloc(sizeof(Pixel*)*lines_size[pol->n-1]);
