@@ -38,6 +38,12 @@ int main() {
     }
     Shape *shp = create_polygon_shape(points, counter);
     add_shape_to_area(ar, shp);
+    
+    int x, y, r;
+    printf("x, y, r: ");
+    scanf("%i %i %i", &x, &y, &r);
+    Shape *shp = create_circle_shape(x, y, r);
+    add_shape_to_area(ar, shp);
     */
     draw_area(ar);
     print_area(ar);
