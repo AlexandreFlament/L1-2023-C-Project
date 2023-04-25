@@ -50,35 +50,3 @@ void print_shape_node(ShapeNode *ShpNode) {
         curr = curr->next;
     }
 }
-
-
-// LAYERNODE
-
-typedef struct LayerNode
-{
-    int id;
-    ShapeNode* shps;
-    struct LayerNode* next;
-} LayerNode;
-
-LayerNode *create_layer_node() {
-    LayerNode *node = malloc(sizeof(LayerNode));
-    if (node != NULL) {
-        node->id = 1; // To Change
-        node->shps = NULL;
-        node->next = NULL;
-    }
-    return node;
-}
-
-void delete_layer_node(LayerNode *node) {
-    LayerNode *curr = node;
-    LayerNode *next = node->next;
-    while (curr!= NULL) {
-        delete_shape(curr->shps);
-        free(curr);
-        curr = next;
-        next = curr->next;
-    }
-    free(node);
-}
