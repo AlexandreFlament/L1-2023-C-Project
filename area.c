@@ -4,6 +4,7 @@
 #include "shapes.h"
 #include "area.h"
 
+#define _USE_MATH_DEFINES
 
 // AREA
 
@@ -55,12 +56,12 @@ void draw_area(Area* area) {
 
     int nb_pixels;
     Pixel **pixels;
-
     for (int shpnb = 0; shpnb<area->nb_shape; shpnb++) {
         pixels = create_shape_to_pixel(area->shapes[shpnb], &nb_pixels);
         for (int pix = 0; pix<nb_pixels; pix++) {
-            printf("\nPix: %d", pix);
-            area->mat[pixels[pix]->py][pixels[pix]->px] = 1;
+            if (area->height > pixels[pix]->py && pixels[pix]->py >= 0 && area->width > pixels[pix]->px && area->width >= 0) {
+                area->mat[pixels[pix]->py][pixels[pix]->px] = 1;
+            }
         }
         delete_pixel_shape(pixels, nb_pixels);
     }
@@ -108,11 +109,11 @@ Pixel** create_shape_to_pixel(Shape* shape, int *nb_pixels) {
         case RECTANGLE:
             return pixel_rectangle(shape, nb_pixels);
             break;
-        /*
+
         case CIRCLE:
             return pixel_circle(shape, nb_pixels);
             break;
-        */
+
         case POLYGON:
             return pixel_polygon(shape, nb_pixels);
             break;
@@ -292,6 +293,80 @@ Pixel **pixel_polygon(Shape *shp, int* nb_pixels) {
     for (int i = 0; i < pol->n-1; i++) {
         for (int j = 0; j < pixel_count[i]; j++) {
             pixels[k++] = pixel_tab[i][j];
+        }
+    }
+
+    return pixels;
+}
+
+Pixel **pixel_circle(Shape *shape, int *nb_pixels) {
+    Circle *circle = (Circle*)shape->ptrShape;
+
+    int x = 0;
+    int y = circle->radius;
+    int d = circle->radius-1;
+    *nb_pixels = 0;
+
+    while (y >= x) {
+        *nb_pixels += 8;
+
+        if (d >= 2 * x) {
+            d -= 2 * x + 1;
+            x++;
+        } else if (d < 2 * (circle->radius - y)) {
+            d += 2 * y - 1;
+            y--;
+        } else {
+            d += 2 * (y - x - 1);
+            y--;
+            x++;
+        }
+    }
+
+
+    Pixel **pixels = malloc(sizeof(Pixel)*(*nb_pixels));
+    Pixel *px = NULL;
+
+    x = 0;
+    y = circle->radius;
+    d = circle->radius-1;
+    *nb_pixels = 0;
+
+    while (y >= x) {
+        px = create_pixel(circle->center->x + x, circle->center->y + y);
+        pixels[(*nb_pixels)++] = px;
+
+        px = create_pixel(circle->center->x + y, circle->center->y + x);
+        pixels[(*nb_pixels)++] = px;
+
+        px = create_pixel(circle->center->x - x, circle->center->y + y);
+        pixels[(*nb_pixels)++] = px;
+
+        px = create_pixel(circle->center->x - y, circle->center->y + x);
+        pixels[(*nb_pixels)++] = px;
+
+        px = create_pixel(circle->center->x + x, circle->center->y - y);
+        pixels[(*nb_pixels)++] = px;
+
+        px = create_pixel(circle->center->x + y, circle->center->y - x);
+        pixels[(*nb_pixels)++] = px;
+
+        px = create_pixel(circle->center->x - x, circle->center->y - y);
+        pixels[(*nb_pixels)++] = px;
+
+        px = create_pixel(circle->center->x - y, circle->center->y - x);
+        pixels[(*nb_pixels)++] = px;
+
+        if (d >= 2 * x) {
+            d -= 2 * x + 1;
+            x++;
+        } else if (d < 2 * (circle->radius - y)) {
+            d += 2 * y - 1;
+            y--;
+        } else {
+            d += 2 * (y - x - 1);
+            y--;
+            x++;
         }
     }
 
