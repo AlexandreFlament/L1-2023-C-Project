@@ -2,16 +2,16 @@
 #include <stdlib.h>
 #include "shapes.h"
 #include "storage.h"
+#include "area.h"
 
-int running = 1;
-int c;
+int running = 1, c;
 
 void clear_buffer() {
     char c;
     while ((c = getchar()) != '\n' && c != EOF);
 }
 
-void optionA(ShapeNode *shape_list) {
+void optionA(Area *ar) {
     int choice = 0;
     while (choice < 1 || choice > 7 ) {
         printf("    Please select an action:\n");
@@ -34,7 +34,7 @@ void optionA(ShapeNode *shape_list) {
             printf("         >> Enter the x and y coordinates: ");
             scanf("%i %i", &x, &y);
             clear_buffer();
-            add_shape_to_node(shape_list, create_point_shape(x,y));
+            add_shape_to_area(ar, create_point_shape(x,y));
             break;
         
         case 2:
@@ -44,7 +44,7 @@ void optionA(ShapeNode *shape_list) {
             printf("         >> Enter the x and y coordinates of the second point: ");
             scanf("%i %i", &x1, &y1);
             clear_buffer();
-            add_shape_to_node(shape_list, create_line_shape(x,y,x1,y1));
+            add_shape_to_area(ar, create_line_shape(x,y,x1,y1));
             break;
         
         case 3:
@@ -54,7 +54,7 @@ void optionA(ShapeNode *shape_list) {
             printf("         >> Enter the radius of the circle: ");
             scanf("%i", &r);
             clear_buffer();
-            add_shape_to_node(shape_list, create_circle_shape(x,y,r));
+            add_shape_to_area(ar, create_circle_shape(x,y,r));
             break;
         case 4:
             printf("         >> Enter the x and y coordinates of the top left point: ");
@@ -63,7 +63,7 @@ void optionA(ShapeNode *shape_list) {
             printf("         >> Enter the length: ");
             scanf("%i", &l);
             clear_buffer();
-            add_shape_to_node(shape_list, create_square_shape(x,y,l));
+            add_shape_to_area(ar, create_square_shape(x,y,l));
             break;
         case 5:
             printf("         >> Enter the x and y coordinates of the top left point: ");
@@ -75,7 +75,7 @@ void optionA(ShapeNode *shape_list) {
             printf("         >> Enter the height: ");
             scanf("%i", &h);
             clear_buffer();
-            add_shape_to_node(shape_list, create_rect_shape(x, y, w, h));
+            add_shape_to_area(ar, create_rect_shape(x, y, w, h));
             break;
         case 6:
             int counter = 0, running = 1;
@@ -91,7 +91,7 @@ void optionA(ShapeNode *shape_list) {
                     running = 0;
                 }
             }
-            add_shape_to_node(shape_list, create_polygon_shape(points, counter));
+            add_shape_to_area(ar, create_polygon_shape(points, counter));
             break;
         
         default:
@@ -100,7 +100,7 @@ void optionA(ShapeNode *shape_list) {
 }
 
 int main() {
-    ShapeNode *shape_list = create_shape_node();
+    Area *ar = create_area(20, 20);
     char choice;
     while (running == 1) {
         choice = 'Z';
@@ -108,7 +108,7 @@ int main() {
         printf("    A. Add a shape\n");
         printf("    B. Display the list of shapes\n");
         printf("    C. Delete a shape (WIP)\n");
-        printf("    D. Draw the shapes (WIP)\n");
+        printf("    D. Draw the shapes\n");
         printf("    E. Help (WIP)\n");
         printf("    F. Exit\n");
         printf(" >> Your choice: ");
@@ -124,19 +124,28 @@ int main() {
             
             case 'A':
             case 'a':
-                optionA(shape_list);
+                optionA(ar);
                 printf("\n");
                 break;
             
             case 'B':
             case 'b':
-                if (shape_list->shp == NULL) {
+                if (ar->nb_shape == 0) {
                     printf("No shape to display\n\n");
                     break;
                 }
+                for (int i = 0; i < ar->nb_shape; i++) {
+                    print_shape(ar->shapes[i]);
+                    printf("\n");
+                }
                 printf("\n");
-                print_shape_node(shape_list);
-                printf("\n");
+                break;
+            
+            case 'D':
+            case 'd':
+                draw_area(ar);
+                print_area(ar);
+                printf("\n\n");
                 break;
 
             default:
