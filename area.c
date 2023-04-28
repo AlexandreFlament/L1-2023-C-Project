@@ -95,7 +95,7 @@ void remove_shape(Area* area, unsigned int shapeid) {
     }
 }
 
-
+ 
 // PIXEL
 
 Pixel* create_pixel(int px, int py) {
