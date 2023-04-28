@@ -76,13 +76,13 @@ typedef struct {
 } Shape;
 
 unsigned int get_next_id();
-Shape *create_empty_shape(SHAPE_TYPE st);
-Shape *create_point_shape(int x, int y);
-Shape *create_line_shape(int x1, int y1, int x2, int y2);
-Shape *create_square_shape(int x, int y, int lenght);
-Shape *create_rect_shape(int x, int y, int width, int height);
-Shape *create_circle_shape(int x, int y, int radius);
-Shape *create_polygon_shape(Point *points[], int n);
+Shape *create_empty_shape(SHAPE_TYPE st, int isid);
+Shape *create_point_shape(int x, int y, int isid);
+Shape *create_line_shape(int x1, int y1, int x2, int y2, int isid);
+Shape *create_square_shape(int x, int y, int lenght, int isid);
+Shape *create_rect_shape(int x, int y, int width, int height, int isid);
+Shape *create_circle_shape(int x, int y, int radius, int isid);
+Shape *create_polygon_shape(Point *points[], int n, int isid);
 void delete_shape(Shape *shp);
 void print_shape(Shape *shp);
 

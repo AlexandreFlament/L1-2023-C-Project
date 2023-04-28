@@ -9,19 +9,19 @@ int main() {
     int x1,y1,x2,y2;
     printf("x1, y1, x2, y2: ");
     scanf("%d %d %d %d",&x1,&y1,&x2,&y2);
-    Shape *shp = create_line_shape(x1,y1,x2,y2);
+    Shape *shp = create_line_shape(x1,y1,x2,y2, 1);
     add_shape_to_area(ar,shp);
 
     int x, y, l;
     printf("x, y, l: ");
     scanf("%d %d %d",&x, &y, &l);
-    Shape *shp = create_square_shape(x, y, l);
+    Shape *shp = create_square_shape(x, y, l, 1);
     add_shape_to_area(ar, shp);
 
     int x, y, w, h;
     printf("x, y, w, h: ");
     scanf("%d %d %d %d", &x, &y, &w, &h);
-    Shape *shp = create_rect_shape(x, y, w, h);
+    Shape *shp = create_rect_shape(x, y, w, h, 1);
     add_shape_to_area(ar, shp);
 
     int counter = 0, running = 1, x, y;
@@ -36,13 +36,13 @@ int main() {
             running = 0;
         }
     }
-    Shape *shp = create_polygon_shape(points, counter);
+    Shape *shp = create_polygon_shape(points, counter, 1);
     add_shape_to_area(ar, shp);
     
     int x, y, r;
     printf("x, y, r: ");
     scanf("%i %i %i", &x, &y, &r);
-    Shape *shp = create_circle_shape(x, y, r);
+    Shape *shp = create_circle_shape(x, y, r, 1);
     add_shape_to_area(ar, shp);
     */
     draw_area(ar);

@@ -34,7 +34,7 @@ void optionA(Area *ar) {
             printf("         >> Enter the x and y coordinates: ");
             scanf("%i %i", &x, &y);
             clear_buffer();
-            add_shape_to_area(ar, create_point_shape(x,y));
+            add_shape_to_area(ar, create_point_shape(x,y, 1));
             break;
         
         case 2:
@@ -44,7 +44,7 @@ void optionA(Area *ar) {
             printf("         >> Enter the x and y coordinates of the second point: ");
             scanf("%i %i", &x1, &y1);
             clear_buffer();
-            add_shape_to_area(ar, create_line_shape(x,y,x1,y1));
+            add_shape_to_area(ar, create_line_shape(x,y,x1,y1, 1));
             break;
         
         case 3:
@@ -54,7 +54,7 @@ void optionA(Area *ar) {
             printf("         >> Enter the radius of the circle: ");
             scanf("%i", &r);
             clear_buffer();
-            add_shape_to_area(ar, create_circle_shape(x,y,r));
+            add_shape_to_area(ar, create_circle_shape(x,y,r, 1));
             break;
         case 4:
             printf("         >> Enter the x and y coordinates of the top left point: ");
@@ -63,7 +63,7 @@ void optionA(Area *ar) {
             printf("         >> Enter the length: ");
             scanf("%i", &l);
             clear_buffer();
-            add_shape_to_area(ar, create_square_shape(x,y,l));
+            add_shape_to_area(ar, create_square_shape(x,y,l, 1));
             break;
         case 5:
             printf("         >> Enter the x and y coordinates of the top left point: ");
@@ -75,7 +75,7 @@ void optionA(Area *ar) {
             printf("         >> Enter the height: ");
             scanf("%i", &h);
             clear_buffer();
-            add_shape_to_area(ar, create_rect_shape(x, y, w, h));
+            add_shape_to_area(ar, create_rect_shape(x, y, w, h, 1));
             break;
         case 6:
             int counter = 0, running = 1;
@@ -91,7 +91,7 @@ void optionA(Area *ar) {
                     running = 0;
                 }
             }
-            add_shape_to_area(ar, create_polygon_shape(points, counter));
+            add_shape_to_area(ar, create_polygon_shape(points, counter, 1));
             break;
         
         default:
@@ -101,6 +101,7 @@ void optionA(Area *ar) {
 
 int main() {
     Area *ar = create_area(20, 20);
+    clear_area(ar);
     char choice;
     while (running == 1) {
         choice = 'Z';

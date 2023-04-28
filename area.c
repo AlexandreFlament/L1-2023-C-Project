@@ -220,10 +220,10 @@ Pixel **pixel_square(Shape *shp, int* nb_pixels) {
 
     int nbpix1, nbpix2, nbpix3, nbpix4; 
 
-    Pixel **p1 = pixel_line(create_line_shape(sq->p->x, sq->p->y, sq->p->x+sq->lenght, sq->p->y), &nbpix1);
-    Pixel **p2 = pixel_line(create_line_shape(sq->p->x, sq->p->y, sq->p->x, sq->p->y+sq->lenght), &nbpix2);
-    Pixel **p3 = pixel_line(create_line_shape(sq->p->x, sq->p->y+sq->lenght, sq->p->x+sq->lenght, sq->p->y+sq->lenght), &nbpix3);
-    Pixel **p4 = pixel_line(create_line_shape(sq->p->x+sq->lenght, sq->p->y, sq->p->x+sq->lenght, sq->p->y+sq->lenght), &nbpix4);
+    Pixel **p1 = pixel_line(create_line_shape(sq->p->x, sq->p->y, sq->p->x+sq->lenght, sq->p->y, 0), &nbpix1);
+    Pixel **p2 = pixel_line(create_line_shape(sq->p->x, sq->p->y, sq->p->x, sq->p->y+sq->lenght, 0), &nbpix2);
+    Pixel **p3 = pixel_line(create_line_shape(sq->p->x, sq->p->y+sq->lenght, sq->p->x+sq->lenght, sq->p->y+sq->lenght, 0), &nbpix3);
+    Pixel **p4 = pixel_line(create_line_shape(sq->p->x+sq->lenght, sq->p->y, sq->p->x+sq->lenght, sq->p->y+sq->lenght, 0), &nbpix4);
     
     *nb_pixels = nbpix1 + nbpix2 + nbpix3 + nbpix4;
     Pixel **pixel_tab = malloc(*nb_pixels * sizeof(Pixel*));
@@ -249,10 +249,10 @@ Pixel **pixel_rectangle(Shape *shp, int* nb_pixels) {
 
     int nbpix1, nbpix2, nbpix3, nbpix4;
 
-    Pixel **p1 = pixel_line(create_line_shape(rect->p->x, rect->p->y, rect->p->x+rect->width, rect->p->y), &nbpix1);
-    Pixel **p2 = pixel_line(create_line_shape(rect->p->x, rect->p->y, rect->p->x, rect->p->y+rect->height), &nbpix2);
-    Pixel **p3 = pixel_line(create_line_shape(rect->p->x, rect->p->y+rect->height, rect->p->x+rect->width, rect->p->y+rect->height), &nbpix3);
-    Pixel **p4 = pixel_line(create_line_shape(rect->p->x+rect->width, rect->p->y, rect->p->x+rect->width, rect->p->y+rect->height), &nbpix4);
+    Pixel **p1 = pixel_line(create_line_shape(rect->p->x, rect->p->y, rect->p->x+rect->width, rect->p->y, 0), &nbpix1);
+    Pixel **p2 = pixel_line(create_line_shape(rect->p->x, rect->p->y, rect->p->x, rect->p->y+rect->height, 0), &nbpix2);
+    Pixel **p3 = pixel_line(create_line_shape(rect->p->x, rect->p->y+rect->height, rect->p->x+rect->width, rect->p->y+rect->height, 0), &nbpix3);
+    Pixel **p4 = pixel_line(create_line_shape(rect->p->x+rect->width, rect->p->y, rect->p->x+rect->width, rect->p->y+rect->height, 0), &nbpix4);
 
     *nb_pixels = nbpix1 + nbpix2 + nbpix3 + nbpix4;
     Pixel **pixel_tab = malloc(*nb_pixels * sizeof(Pixel*));
@@ -281,7 +281,7 @@ Pixel **pixel_polygon(Shape *shp, int* nb_pixels) {
 
     *nb_pixels = 0;
     for (int i = 0; i < pol->n-1; i++) {
-        Shape *ln = create_line_shape(pol->points[i]->x, pol->points[i]->y, pol->points[i+1]->x, pol->points[i+1]->y);
+        Shape *ln = create_line_shape(pol->points[i]->x, pol->points[i]->y, pol->points[i+1]->x, pol->points[i+1]->y, 0);
         pixel_tab[i] = pixel_line(ln, &pixel_count[i]);
 
         *nb_pixels += pixel_count[i];

@@ -193,25 +193,25 @@ unsigned int get_next_id() {
     return global_id;
 }
 
-Shape *create_empty_shape(SHAPE_TYPE st) {
+Shape *create_empty_shape(SHAPE_TYPE st, int isid) {
     Shape *shape = malloc(sizeof(Shape));
     if (shape != NULL) {
-        shape->id = get_next_id();
+        shape->id = isid ? get_next_id() : 0;
         shape->shape_type = st;
         shape->ptrShape = NULL;
     }
     return shape;
 }
 
-Shape *create_point_shape(int x, int y) {
-    Shape *shp = create_empty_shape(POINT);
+Shape *create_point_shape(int x, int y, int isid) {
+    Shape *shp = create_empty_shape(POINT, isid);
     Point *p = create_point(x,y);
     shp->ptrShape = p;
     return shp;   
 }
 
-Shape *create_line_shape(int x1, int y1, int x2, int y2) {
-    Shape *shp = create_empty_shape(LINE);
+Shape *create_line_shape(int x1, int y1, int x2, int y2, int isid) {
+    Shape *shp = create_empty_shape(LINE, isid);
     Point *p1 = create_point(x1,y1);
     Point *p2 = create_point(x2,y2);
     Line *l = create_line(p1, p2);
@@ -219,32 +219,32 @@ Shape *create_line_shape(int x1, int y1, int x2, int y2) {
     return shp;
 }
 
-Shape *create_square_shape(int x, int y, int lenght) {
-    Shape *shp = create_empty_shape(SQUARE);
+Shape *create_square_shape(int x, int y, int lenght, int isid) {
+    Shape *shp = create_empty_shape(SQUARE, isid);
     Point *p = create_point(x,y);
     Square *sq = create_square(p, lenght);
     shp->ptrShape = sq;
     return shp;
 }
 
-Shape *create_rect_shape(int x, int y, int width, int height) {
-    Shape *shp = create_empty_shape(RECTANGLE);
+Shape *create_rect_shape(int x, int y, int width, int height, int isid) {
+    Shape *shp = create_empty_shape(RECTANGLE, isid);
     Point *p = create_point(x,y);
     Rect *r = create_rect(p, width, height);
     shp->ptrShape = r;
     return shp;
 }
 
-Shape *create_circle_shape(int x, int y, int radius) {
-    Shape *shp = create_empty_shape(CIRCLE);
+Shape *create_circle_shape(int x, int y, int radius, int isid) {
+    Shape *shp = create_empty_shape(CIRCLE, isid);
     Point *p = create_point(x,y);
     Circle *c = create_circle(p, radius);
     shp->ptrShape = c;
     return shp;
 }
 
-Shape *create_polygon_shape(Point *points[], int n) {
-    Shape *shp = create_empty_shape(POLYGON);
+Shape *create_polygon_shape(Point *points[], int n, int isid) {
+    Shape *shp = create_empty_shape(POLYGON, isid);
     Polygon *p = create_polygon(n);
     p->points = malloc(sizeof(Point)*n);
     for (int i = 0; i < n; i++) {
