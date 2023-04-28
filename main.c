@@ -108,7 +108,7 @@ int main() {
         printf("Please select an action:\n");
         printf("    A. Add a shape\n");
         printf("    B. Display the list of shapes\n");
-        printf("    C. Delete a shape (WIP)\n");
+        printf("    C. Delete a shape\n");
         printf("    D. Draw the shapes\n");
         printf("    E. Help (WIP)\n");
         printf("    F. Exit\n");
@@ -142,6 +142,16 @@ int main() {
                 printf("\n");
                 break;
             
+            case 'C':
+            case 'c':
+                int chosenid = 0;
+                printf("Which shaped would you like to removed ? (Use the ID of the shape) ");
+                scanf("%i", &chosenid);
+                clear_buffer();
+                remove_shape(ar, chosenid);
+                printf("\n");
+                break;
+
             case 'D':
             case 'd':
                 draw_area(ar);

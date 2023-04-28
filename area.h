@@ -24,7 +24,7 @@ void erase_area(Area* area);
 void delete_area(Area* area);
 void draw_area(Area* area);
 void print_area(Area* area);
-
+void remove_shape(Area* area, unsigned int shapeid);
 
 // PIXEL
 

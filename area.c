@@ -80,6 +80,21 @@ void print_area(Area* area) {
     }
 }
 
+void remove_shape(Area* area, unsigned int shapeid) {
+    for (int i = 0; i<area->nb_shape; i++) {
+        if (area->shapes[i]->id == shapeid) {
+            int j=i;
+            delete_shape(area->shapes[i]);
+            for (; j < area->nb_shape; j++) {
+                area->shapes[j] = area->shapes[j + 1];
+            }
+            free(area->shapes[j]);
+            area->nb_shape--;
+            return;
+        }
+    }
+}
+
 
 // PIXEL
 
