@@ -110,7 +110,7 @@ int main() {
         printf("    B. Display the list of shapes\n");
         printf("    C. Delete a shape\n");
         printf("    D. Draw the shapes\n");
-        printf("    E. Help (WIP)\n");
+        printf("    E. Help\n");
         printf("    F. Exit\n");
         printf(" >> Your choice: ");
         scanf("%c", &choice);
@@ -157,6 +157,27 @@ int main() {
                 draw_area(ar);
                 print_area(ar);
                 printf("\n\n");
+                break;
+            
+            case 'E':
+            case 'e':
+                printf("\033[1mHow to add a shape ? \033[0m\n");
+                printf("In the main menu, select option A, you will be given a list of shapes to choose from (POINT/LINE/SQUARE/CIRCLE/RECTANGLE/POLYGON).\n");
+                printf("For each shape there will be a different set of instructions to follow and the key to success is following them. For example, choosing a POINT shape will ask you to enter 2 interger, whether they be on the same line or not.\n\n");
+                
+                printf("\033[1mHow to see the shapes ? \033[0m\n");
+                printf("There are two ways to do that, seing them as a list or displaying them on a list.\n");
+                printf("To see the list of shapes, choose option B from where you will see everything you need to know about the shapes you added, including their ID which will be useful when removing a shape.\n");
+                printf("To display a grid with the shapes drawn on it, choose option D, it will display every shape you added or 'No shape to display' if you didn't add any.\n\n");
+
+                printf("\033[1mHow to remove a shape ? \033[0m\n");
+                printf("First, get the ID of the shape you want to remove from the list of shapes (Option B).\n");
+                printf("Then, using option C, write the ID of the shape and it will be removed.\n");
+                printf("Note that there will be no warning or whatever of the sort if the ID is wrong or doesn't exist.\n\n");
+
+                printf("\033[1mHow to exit ? \033[0m\n");
+                printf("Either using option F or with ctrl+c\n\n");
+
                 break;
 
             default:
