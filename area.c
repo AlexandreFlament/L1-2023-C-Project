@@ -40,7 +40,7 @@ void clear_area(Area* area) {
 
 void erase_area(Area* area) {
     for (int i = 0; i<area->nb_shape; i++) {
-        free(area->shapes[i]);
+        delete_shape(area->shapes[i]);
     }
     area->nb_shape = 0;
     clear_area(area);
