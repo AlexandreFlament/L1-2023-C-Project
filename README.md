@@ -67,9 +67,9 @@ POLYGON | N : 4
 ```
 
 ### Option C
-Used to remove a shape from the shape list. To use it call it and give it the ID of the shape you want to remove.  
+Used to remove a shape from the shape list. To use it, call it and give it the ID of the shape you want to remove.  
 ```
-Which shaped would you like to removed ? (Use the ID of the shape) ...
+Which shape would you like to remove ? (Use the ID of the shape) ...
 ```
 
 ### Option D
@@ -107,10 +107,10 @@ To display a grid with the shapes drawn on it, choose option D, it will display 
 How to remove a shape ? 
 First, get the ID of the shape you want to remove from the list of shapes (Option B).
 Then, using option C, write the ID of the shape and it will be removed.
-Note that there will be no warning or whatever of the sort if the ID is wrong or doesn't exist.
+Note that there will be no warning whatsoever if the ID is wrong or doesn't exist.
 
 How to exit ? 
-Either using option F or with ctrl+c
+Either by using option F or with ctrl+c.
 ```
 
 ### Option F
@@ -559,7 +559,7 @@ for (int i = 0; i < ar->nb_shape; i++) {
 ```
 
 #### Option C
-We ask the user for which `Shape` he wants to remove through the `ID` he is asked to give, we then call the `remove_shape` function with the ID the user gave.
+We ask the user for which `Shape` he wants to remove through the `ID` he is asked to give, and we then call the `remove_shape` function with the ID the user gave.
 ```c
 int chosenid = 0;
 printf("Which shaped would you like to removed ? (Use the ID of the shape) ");
