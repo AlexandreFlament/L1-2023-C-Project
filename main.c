@@ -82,12 +82,20 @@ void optionA(Area *ar) {
             Point *points[100];
             printf("The program will stop once the first and last point are the same\n");
             while (running) {
+                if (counter == 94) {
+                    printf("         >> Only 5 points remaining, if you exceed the 100 points limits, the last point you give (the 100th) will be your first point.\n");
+                }
                 printf("         >> Enter the x and y coordinates the point %i: ", counter);
                 scanf("%i %i", &x, &y);
                 clear_buffer();
                 points[counter] = create_point(x,y);
                 counter++;
                 if (points[0]->x == points[counter-1]->x && points[0]->y == points[counter-1]->y && counter>1) {
+                    running = 0;
+                }
+                if (counter == 100) {
+                    delete_point(points[99]);
+                    points[99] = create_point(points[0]->x, points[0]->y);
                     running = 0;
                 }
             }
