@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "shapes.h"
 #include "storage.h"
 #include "area.h"
@@ -106,8 +107,7 @@ void optionA(Area *ar) {
             break;
     }
 }
-
-int main() {
+void menu() {
     Area *ar = create_area(20, 20);
     clear_area(ar);
     char choice;
@@ -198,6 +198,15 @@ int main() {
             clear_buffer();
         }
     }
+}
 
+int main(int argc, char *argv[]) {
+    for (int i = 1; i < argc; i++) {
+        if (!strcmp(argv[i],"--terminal")) {
+            printf("Terminal");
+            return 0;
+        }
+    }
+    menu();
     return 0;
 }
