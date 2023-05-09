@@ -110,6 +110,32 @@ int read_exec_cmd(Command *cmd, Area *ar) {
     }
 }
 
-void read_from_stdin(Command *cmd) {
+int Xisnumber(char *str) {
+    int i = 0;
+    while (str[i] != '\0') {
+        if (str[i] >= '0' && str[i] <= '9') {
+            
+        } else {
+            return 0;
+        }
+        i++;
+    }
+    return 1;
+}
 
+void read_from_stdin(Command *cmd) {
+    char input[1024];
+    fgets(input, 1024, stdin);
+
+    char *curr = strtok(input, " ");
+    cmd->name = curr;
+
+    while (curr != NULL) {
+        if (Xisnumber(curr)) {
+            add_int_param(cmd, atoi(curr));
+        } else {
+            add_str_param(cmd, curr);
+        }
+        curr = strtok(NULL, " \n");
+    }
 }
