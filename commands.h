@@ -11,7 +11,7 @@ typedef struct cmd {
     int int_size;
     int int_param[200];
     int char_size;
-    char char_param[200][50];
+    char *char_param[200][50];
 } Command;
 
 Command *create_command();
