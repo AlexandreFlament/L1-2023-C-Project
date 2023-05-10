@@ -35,7 +35,7 @@ int read_exec_cmd(Command *cmd, Area *ar) {
     if (!strcmp(cmd->name, "clear")) {
         printf("\e[1;1H\e[2J");
         return 0;
-    }
+    } else
     if (!strcmp(cmd->name, "exit")) {
         _Exit(0);
     }
@@ -83,7 +83,7 @@ int read_exec_cmd(Command *cmd, Area *ar) {
     }
     if (!strcmp(cmd->name, "list")) {
         if (ar->nb_shape == 0) {
-            printf("No shape to display\n\n");
+            printf("No shape to display\n");
             return 0;
         }
         for (int i = 0; i < ar->nb_shape; i++) {
@@ -93,18 +93,21 @@ int read_exec_cmd(Command *cmd, Area *ar) {
         printf("\n");
         return 0;
     }
-    if (strcmp(cmd->name, "delete")) {
+    if (!strcmp(cmd->name, "print")) {
+        print_area(ar);
+    }
+    if (!strcmp(cmd->name, "delete")) {
         if (cmd->int_size >= 1 && cmd->int_param[0] > 0) {
             remove_shape(ar, cmd->int_param[0]);
         }
         return 0;
     }
-    if (strcmp(cmd->name, "erase")) {
+    if (!strcmp(cmd->name, "erase")) {
         erase_area(ar);
         return 0;
     }
-    if (strcmp(cmd->name, "help")) {
-        printf("ahah no");
+    if (!strcmp(cmd->name, "help")) {
+        printf("ahah no\n");
     }
 }
 

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "shapes.h"
-#include "storage.h"
+#include "commands.h"
 #include "area.h"
 
 int running = 1, c;
@@ -200,10 +200,22 @@ void menu() {
     }
 }
 
+void terminal() {
+    Area *ar = create_area(20, 20);
+    clear_area(ar);
+    while (1) {
+        Command *c = create_command();
+        printf(">>> ");
+        read_from_stdin(c);
+        read_exec_cmd(c, ar);
+        free_cmd(c);
+    }
+}
+
 int main(int argc, char *argv[]) {
     for (int i = 1; i < argc; i++) {
         if (!strcmp(argv[i],"--terminal")) {
-            printf("Terminal");
+            terminal();
             return 0;
         }
     }
