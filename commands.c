@@ -12,7 +12,12 @@ void add_str_param(Command *cmd, char *p) {
     if (cmd->char_size == 200) {
         return;
     }
-    cmd->char_param[cmd->char_size++] = p;
+    int i = 0;
+    while (p[i] != '\0') {
+        cmd->char_param[cmd->char_size][i] = p[i];
+        i++;
+    }
+    cmd->char_size++;
 }
 
 void add_int_param(Command *cmd, int p) {
@@ -23,13 +28,6 @@ void add_int_param(Command *cmd, int p) {
 }
 
 void free_cmd(Command *cmd) {
-    free(cmd->name);
-    for (int i = 0; i < cmd->int_size; i++) {
-        free(cmd->int_param[i]);
-    }
-    for (int i = 0; i < cmd->char_size; i++) {
-        free(cmd->char_param[i]);
-    }
     free(cmd);
 }
 
@@ -67,15 +65,15 @@ int read_exec_cmd(Command *cmd, Area *ar) {
     }
     if (!strcmp(cmd->name, "rectangle")) {
         if (cmd->int_size >= 4) {
-            add_shape_to_area(ar, create_rectangle_shape(cmd->int_param[0], cmd->int_param[1], cmd->int_param[2], cmd->int_param[3], 1));
+            add_shape_to_area(ar, create_rect_shape(cmd->int_param[0], cmd->int_param[1], cmd->int_param[2], cmd->int_param[3], 1));
         }
         return 0;
     }
     if (!strcmp(cmd->name, "polygon")) {
         if (cmd->int_size == 4) {
-            add_shape_to_area(ar, create_line_shapecreate_line_shape(cmd->int_param[0], cmd->int_param[1], cmd->int_param[2], cmd->int_param[3], 1));
+            add_shape_to_area(ar, create_line_shape(cmd->int_param[0], cmd->int_param[1], cmd->int_param[2], cmd->int_param[3], 1));
         } else if (cmd->int_size >= 6 && cmd->int_size % 2 == 0) {
-            add_shape_to_area(ar, create_polygon_shape(cmd->int_param, cmd->int_size, 1));
+            add_shape_to_area(ar, create_polygon_shape(create_point_list(cmd->int_param, cmd->int_size), cmd->int_size, 1));
         }
         return 0;
     }
@@ -127,8 +125,9 @@ void read_from_stdin(Command *cmd) {
     char input[1024];
     fgets(input, 1024, stdin);
 
-    char *curr = strtok(input, " ");
+    char *curr = strtok(input, " \n");
     cmd->name = curr;
+    curr = strtok(NULL, " \n");
 
     while (curr != NULL) {
         if (Xisnumber(curr)) {
