@@ -8,6 +8,7 @@ typedef struct
 } Point;
 
 Point *create_point(int px, int py);
+Point **create_point_list(int lst[], int n);
 void delete_point(Point *p);
 void print_point(Point *p);
 

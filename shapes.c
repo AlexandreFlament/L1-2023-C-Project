@@ -19,6 +19,17 @@ Point *create_point(int px, int py) {
     return point;
 }
 
+Point **create_point_list(int lst[], int n) {
+    Point **p = malloc(sizeof(Point)*n);
+    int c = 0;
+    for (int i = 0; i<n; i++) {
+        p[i] = create_point(lst[c], lst[c+1]);
+        c+=2;
+        
+    }
+    return p;
+}
+
 void delete_point(Point *p) {
     free(p);
 }
