@@ -87,7 +87,7 @@ void draw_layers(Layer *head) {
     while (curr != NULL) {
         draw_area(curr->ar);
     }
-    Layer *curr = head;
+    curr = head;
     while (curr != NULL) {
         for (int i = 0; i<head->ar->height; i++) {
             for (int j = 0; j<head->ar->width; i++) {

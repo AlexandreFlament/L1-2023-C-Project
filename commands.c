@@ -169,11 +169,11 @@ int read_exec_cmd(Command *cmd, Area *ar, Layer *lyr, int *sid) {
             }
         }
 
-        if (!strcmp(cmd->char_param[0], "point") && cmd->int_param>=3) {
+        if (!strcmp(cmd->char_param[0], "point") && cmd->int_size>=3) {
             Layer *curr = lyr;
             while (curr != NULL) {
                 if (curr->id == cmd->int_param[0]) {
-                    Point *p = create_point_shape(cmd->int_param[1], cmd->int_param[2], 1);
+                    Shape *p = create_point_shape(cmd->int_param[1], cmd->int_param[2], 1);
                     add_shape_to_area(curr->ar, p);
                     printf("Point added to Layer %i\n", cmd->int_param[0]);
                 }
