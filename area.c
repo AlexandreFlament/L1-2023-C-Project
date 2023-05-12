@@ -47,7 +47,10 @@ void erase_area(Area* area) {
 }
 
 void delete_area(Area* area) {
-    erase_area(area);
+    for (int i = 0; i<area->height; i++) {
+        free(area->mat[i]);
+    }
+    free(area->mat);
     free(area);
 }
 
