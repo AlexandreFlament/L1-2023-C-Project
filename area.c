@@ -22,6 +22,8 @@ Area* create_area(unsigned int width, unsigned int height) {
     ar->mat = mat;
     ar->nb_shape = 0;
 
+    clear_area(ar);
+
     return ar;
 }
 
