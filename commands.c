@@ -115,16 +115,28 @@ int read_exec_cmd(Command *cmd, Area *ar, Layer *lyr, int *sid) {
         if (cmd->char_size<1) {
             return 0;
         }
+
+        if (!strcmp(cmd->char_param[0], "draw")) {
+            draw_layers(lyr);
+        }
+
+        if (!strcmp(cmd->char_param[0], "print")) {
+            print_area(lyr->ar);
+        }
+
         if (!strcmp(cmd->char_param[0], "list")) {
             print_layer(lyr, *sid);
         }
+
         if (!strcmp(cmd->char_param[0], "add")) {
             add_layer(lyr, create_layer(create_area(20,20)));
             printf("Layer added\n");
         }
+
         if (cmd->int_size<1) {
             return 0;
         }
+
         if (!strcmp(cmd->char_param[0], "visible")) {
             int res = change_layer_visibility(lyr, cmd->int_param[0]);
             if (res == -1) {
@@ -137,9 +149,11 @@ int read_exec_cmd(Command *cmd, Area *ar, Layer *lyr, int *sid) {
                 printf("Layer visibility changed to invisible\n");
             }
         }
+
         if (!strcmp(cmd->char_param[0], "select")) {
             *sid = cmd->int_param[0];
         }
+
         if (!strcmp(cmd->char_param[0], "remove")) {
             if (cmd->int_param[0] == 0) {
                 printf("You may not remove the initial layer.\n");
@@ -152,6 +166,19 @@ int read_exec_cmd(Command *cmd, Area *ar, Layer *lyr, int *sid) {
                 if (cmd->int_param[0] == *sid) {
                     *sid = 0;
                 }
+            }
+        }
+
+        if (!strcmp(cmd->char_param[0], "point") && cmd->int_param>=3) {
+            Layer *curr = lyr;
+            while (curr != NULL) {
+                if (curr->id == cmd->int_param[0]) {
+                    Point *p = create_point_shape(cmd->int_param[1], cmd->int_param[2], 1);
+                    add_shape_to_area(curr->ar, p);
+                    printf("Point added to Layer %i\n", cmd->int_param[0]);
+                }
+
+                curr = curr->succ;
             }
         }
 

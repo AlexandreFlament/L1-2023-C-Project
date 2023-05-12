@@ -18,5 +18,6 @@ void add_layer(Layer *head, Layer *toadd);
 int remove_layer(Layer *head, unsigned int id);
 void print_layer(Layer *head, unsigned int selectedid);
 int change_layer_visibility(Layer *lyr, int id);
+void draw_layers(Layer *head)
 
 #endif

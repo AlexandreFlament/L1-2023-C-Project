@@ -81,3 +81,21 @@ int change_layer_visibility(Layer *head, int id) {
     }
     return -1;
 }
+
+void draw_layers(Layer *head) {
+    Layer *curr = head;
+    while (curr != NULL) {
+        draw_area(curr->ar);
+    }
+    Layer *curr = head;
+    while (curr != NULL) {
+        for (int i = 0; i<head->ar->height; i++) {
+            for (int j = 0; j<head->ar->width; i++) {
+                if (curr->ar->mat[i][j] == 1) {
+                    head->ar->mat[i][j] = 1;
+                }
+            }
+        }
+        curr = curr->succ;
+    }
+}
