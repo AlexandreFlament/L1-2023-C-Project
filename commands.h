@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "area.h"
+#include "layers.h"
 
 typedef struct cmd {
     char *name;
@@ -18,7 +19,7 @@ Command *create_command();
 void add_str_param(Command *cmd, char *p);
 void add_int_param(Command *cmd, int p);
 void free_cmd(Command *cmd);
-int read_exec_cmd(Command *cmd, Area *ar);
+int read_exec_cmd(Command *cmd, Area *ar, Layer *lyr, int *sid);
 int Xisnumber(char *str);
 void read_from_stdin(Command *cmd);
 

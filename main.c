@@ -4,6 +4,7 @@
 #include "shapes.h"
 #include "commands.h"
 #include "area.h"
+#include "layers.h"
 
 int running = 1, c;
 
@@ -201,13 +202,18 @@ void menu() {
 }
 
 void terminal() {
-    Area *ar = create_area(20, 20);
+    Layer *lyr = create_layer(create_area(20,20));
+
+    int selectedid = 0;
+
+    Area *ar = create_area(20, 10);
     clear_area(ar);
+
     while (1) {
         Command *c = create_command();
         printf(">>> ");
         read_from_stdin(c);
-        read_exec_cmd(c, ar);
+        read_exec_cmd(c, ar, lyr, &selectedid);
         free_cmd(c);
     }
 }

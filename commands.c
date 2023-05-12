@@ -17,6 +17,7 @@ void add_str_param(Command *cmd, char *p) {
         cmd->char_param[cmd->char_size][i] = p[i];
         i++;
     }
+    cmd->char_param[cmd->char_size][i] = '\0';
     cmd->char_size++;
 }
 
@@ -31,7 +32,7 @@ void free_cmd(Command *cmd) {
     free(cmd);
 }
 
-int read_exec_cmd(Command *cmd, Area *ar) {
+int read_exec_cmd(Command *cmd, Area *ar, Layer *lyr, int *sid) {
     if (!strcmp(cmd->name, "clear")) {
         printf("\e[1;1H\e[2J");
         return 0;
@@ -108,6 +109,53 @@ int read_exec_cmd(Command *cmd, Area *ar) {
     }
     if (!strcmp(cmd->name, "help")) {
         printf("ahah no\n");
+        return 0;
+    }
+    if (!strcmp(cmd->name, "layer")) {
+        if (cmd->char_size<1) {
+            return 0;
+        }
+        if (!strcmp(cmd->char_param[0], "list")) {
+            print_layer(lyr, *sid);
+        }
+        if (!strcmp(cmd->char_param[0], "add")) {
+            add_layer(lyr, create_layer(create_area(20,20)));
+            printf("Layer added\n");
+        }
+        if (cmd->int_size<1) {
+            return 0;
+        }
+        if (!strcmp(cmd->char_param[0], "visible")) {
+            int res = change_layer_visibility(lyr, cmd->int_param[0]);
+            if (res == -1) {
+                printf("Layer id doesn't exist\n");
+            }
+            if (res == 0) {
+                printf("Layer visibility changed to visible\n");
+            }
+            if (res == 1) {
+                printf("Layer visibility changed to invisible\n");
+            }
+        }
+        if (!strcmp(cmd->char_param[0], "select")) {
+            *sid = cmd->int_param[0];
+        }
+        if (!strcmp(cmd->char_param[0], "remove")) {
+            if (cmd->int_param[0] == 0) {
+                printf("You may not remove the initial layer.\n");
+            } else {
+                if (remove_layer(lyr, cmd->int_param[0]) == 1) {
+                    printf("Layer removed\n");
+                } else {
+                    printf("Layer doesn't exist\n");
+                }
+                if (cmd->int_param[0] == *sid) {
+                    *sid = 0;
+                }
+            }
+        }
+
+        return 0;
     }
 }
 
