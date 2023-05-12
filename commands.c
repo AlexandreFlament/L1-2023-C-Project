@@ -118,6 +118,7 @@ int read_exec_cmd(Command *cmd, Area *ar, Layer *lyr, int *sid) {
 
         if (!strcmp(cmd->char_param[0], "draw")) {
             draw_layers(lyr);
+            printf("Layers drawn\n");
         }
 
         if (!strcmp(cmd->char_param[0], "print")) {
@@ -126,6 +127,19 @@ int read_exec_cmd(Command *cmd, Area *ar, Layer *lyr, int *sid) {
 
         if (!strcmp(cmd->char_param[0], "list")) {
             print_layer(lyr, *sid);
+        }
+
+        if (!strcmp(cmd->char_param[0], "shapes")) {
+            if (lyr->ar->nb_shape == 0) {
+                printf("No shape to display\n");
+                return 0;
+            }
+            for (int i = 0; i < lyr->ar->nb_shape; i++) {
+                print_shape(lyr->ar->shapes[i]);
+                printf("\n");
+            }
+            printf("\n");
+            return 0;
         }
 
         if (!strcmp(cmd->char_param[0], "add")) {
@@ -154,7 +168,17 @@ int read_exec_cmd(Command *cmd, Area *ar, Layer *lyr, int *sid) {
             *sid = cmd->int_param[0];
         }
 
-        if (!strcmp(cmd->char_param[0], "remove")) {
+        if (!strcmp(cmd->char_param[0], "remove") ) {
+            if (cmd->char_size>=2) {
+                if (!strcmp(cmd->char_param[1], "shape")) {
+                    Layer *curr = lyr;
+                    while (curr != NULL) {
+                        remove_shape(curr->ar, cmd->int_param[0]);
+                        curr = curr->succ;
+                    }
+                    return 0;
+                }
+            }
             if (cmd->int_param[0] == 0) {
                 printf("You may not remove the initial layer.\n");
             } else {
@@ -169,13 +193,102 @@ int read_exec_cmd(Command *cmd, Area *ar, Layer *lyr, int *sid) {
             }
         }
 
-        if (!strcmp(cmd->char_param[0], "point") && cmd->int_size>=3) {
+        if (!strcmp(cmd->char_param[0], "point")) {
+            if (cmd->int_size<2) {
+                printf("Not enough arguments given\n");
+                return 0;
+            }
             Layer *curr = lyr;
             while (curr != NULL) {
-                if (curr->id == cmd->int_param[0]) {
-                    Shape *p = create_point_shape(cmd->int_param[1], cmd->int_param[2], 1);
+                if (curr->id == *sid) {
+                    Shape *p = create_point_shape(cmd->int_param[0], cmd->int_param[1], 1);
                     add_shape_to_area(curr->ar, p);
-                    printf("Point added to Layer %i\n", cmd->int_param[0]);
+                    printf("Point added to Layer %i\n", *sid);
+                }
+
+                curr = curr->succ;
+            }
+        }
+
+        if (!strcmp(cmd->char_param[0], "line")) {
+            if (cmd->int_size<4) {
+                printf("Not enough arguments given\n");
+                return 0;
+            }
+            Layer *curr = lyr;
+            while (curr != NULL) {
+                if (curr->id == *sid) {
+                    Shape *p = create_line_shape(cmd->int_param[0], cmd->int_param[1], cmd->int_param[2], cmd->int_param[3], 1);
+                    add_shape_to_area(curr->ar, p);
+                    printf("Line added to Layer %i\n", *sid);
+                }
+
+                curr = curr->succ;
+            }
+        }
+
+        if (!strcmp(cmd->char_param[0], "circle")) {
+            if (cmd->int_size<3) {
+                printf("Not enough arguments given\n");
+                return 0;
+            }
+            Layer *curr = lyr;
+            while (curr != NULL) {
+                if (curr->id == *sid) {
+                    Shape *p = create_circle_shape(cmd->int_param[0], cmd->int_param[1], cmd->int_param[2], 1);
+                    add_shape_to_area(curr->ar, p);
+                    printf("Circle added to Layer %i\n", *sid);
+                }
+
+                curr = curr->succ;
+            }
+        }
+
+        if (!strcmp(cmd->char_param[0], "square")) {
+            if (cmd->int_size<3) {
+                printf("Not enough arguments given\n");
+                return 0;
+            }
+            Layer *curr = lyr;
+            while (curr != NULL) {
+                if (curr->id == *sid) {
+                    Shape *p = create_square_shape(cmd->int_param[0], cmd->int_param[1], cmd->int_param[2], 1);
+                    add_shape_to_area(curr->ar, p);
+                    printf("Square added to Layer %i\n", *sid);
+                }
+
+                curr = curr->succ;
+            }
+        }
+
+        if (!strcmp(cmd->char_param[0], "rectangle")) {
+            if (cmd->int_size<4) {
+                printf("Not enough arguments given\n");
+                return 0;
+            }
+            Layer *curr = lyr;
+            while (curr != NULL) {
+                if (curr->id == *sid) {
+                    Shape *p = create_rect_shape(cmd->int_param[0], cmd->int_param[1], cmd->int_param[2], cmd->int_param[3], 1);
+                    add_shape_to_area(curr->ar, p);
+                    printf("Rectangle added to Layer %i\n", *sid);
+                }
+
+                curr = curr->succ;
+            }
+        }
+
+        if (!strcmp(cmd->char_param[0], "polygon")) {
+            if (cmd->int_size<6) {
+                printf("Not enough arguments given\n");
+                return 0;
+            }
+            Layer *curr = lyr;
+            while (curr != NULL) {
+                if (curr->id == *sid) {
+                    Shape *p = create_polygon_shape(create_point_list(cmd->int_param, cmd->int_size), cmd->int_size/2, 1);
+                    add_shape_to_area(curr->ar, p);
+                    printf("Square added to Layer %i\n", *sid);
                 }
 
                 curr = curr->succ;

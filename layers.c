@@ -86,11 +86,12 @@ void draw_layers(Layer *head) {
     Layer *curr = head;
     while (curr != NULL) {
         draw_area(curr->ar);
+        curr = curr->succ;
     }
     curr = head;
     while (curr != NULL) {
         for (int i = 0; i<head->ar->height; i++) {
-            for (int j = 0; j<head->ar->width; i++) {
+            for (int j = 0; j<head->ar->width; j++) {
                 if (curr->ar->mat[i][j] == 1) {
                     head->ar->mat[i][j] = 1;
                 }
