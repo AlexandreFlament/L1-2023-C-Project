@@ -2,12 +2,13 @@
 
 
 ## Compiling
-Use the following command in the terminal: "gcc main.c shapes.c area.c"
+Use the following command in the terminal: "gcc main.c commands.c shapes.c area.c layers.c "
 
 
 ## Running
 If you do not have an "Application.exe" file, compile the project as seen before.  
 If you have the executable file, run it and follow the program instructions.
+It can be run by writing in the terminal either `./a.exe --terminal` or `./a.exe`.
 
 
 ## How To use it
